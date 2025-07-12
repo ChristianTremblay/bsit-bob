@@ -2027,7 +2027,7 @@ class ConnectionPoint(Node):
         #if other.connectsThrough:
         #    raise RuntimeError("other connection point connected")
         self._data_graph.add(
-                (self._node_iri, S223.mapsTo, other._node_iri)
+                ((self._node_iri, S223.mapsTo, other._node_iri))
             )
         self.mapsTo = other
 
