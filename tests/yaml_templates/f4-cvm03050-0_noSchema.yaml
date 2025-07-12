@@ -1,0 +1,27 @@
+name: F4CVM03050
+template_class: bacnet.Device
+params:
+  comment: The Facility Explorer VAV Box Controllers (CVM) are models of a new, modernized family of equipment controllers which integrate in the Facility Explorer system. The CVM controllers are versatile equipment controllers designed to monitor, control, and integrate Variable Air Volume (VAV) equipment. These controllers support BACnet MS/TP and N2 communication protocols, and auto-detect which protocol is connected to it. In MS/TP mode, these equipment controllers are BACnet® network compliant devices. Controllers running in N2 mode can be used to maintain or modernize sites with installed legacy Johnson Controls® controllers.
+cp:
+    electricalInlet: Electricity_24VLN_1Ph_60HzInletConnectionPoint
+    fcbus: RS485BidirectionalConnectionPoint
+    sabus: RS485BidirectionalConnectionPoint
+    ui1: ModulationSignalInletConnectionPoint
+    ui2: ModulationSignalInletConnectionPoint
+    ui3: ModulationSignalInletConnectionPoint
+    bi1: OnOffSignalInletConnectionPoint
+    bi2: OnOffSignalInletConnectionPoint
+    bo1: OnOffSignalOutletConnectionPoint
+    bo2: OnOffSignalOutletConnectionPoint
+    bo3: OnOffSignalOutletConnectionPoint
+    co1: ModulationSignalOutletConnectionPoint
+    co2: ModulationSignalOutletConnectionPoint
+bacnet: # template_class must be bacnet.Device
+  deviceObject:
+    class: DeviceObject
+    objectIdentifier: device,5204
+    vendorIdentifier: 5
+  DAVP:
+    class: AnalogInputObject
+    objectIdentifier: analogInput,1094
+    objectName: DA-VP

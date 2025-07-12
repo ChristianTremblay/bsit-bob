@@ -31,8 +31,8 @@ def test_create_sensor_002(bob_fixture):
         # hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
         hasUnit=UNIT.PA,
     )
-    tpd01["highPort"] % clean_room_hvac
-    tpd01["lowPort"] % SAS_hvac
+    tpd01.add_hasObservationLocation((clean_room_hvac,SAS_hvac))
+
     tpd01.hasPhysicalLocation = mechroom
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

@@ -1,7 +1,7 @@
 from typing import Any
 
 
-from bob.producer.causality import Causality
+from bob.functions import Function
 from bob.properties.ratio import Percent
 from bob.properties.states import OnOffStatus
 
@@ -38,7 +38,6 @@ class OccupantMotionSensor(OccupancySensor):
         )
 
 
-# That should provide a producer of count value
 class OccupantCounterSensor(OccupantMotionSensor):
     _class_iri = S223.Sensor
     # measuresMedium: Medium = Light
@@ -52,11 +51,10 @@ class OccupantCounterSensor(OccupantMotionSensor):
             label=f"{self.label}.OccupantCount",
             **_property_kwargs,
         )
-        counter = Causality(label="countProducer")
-        counter.cause_input << self.observedProperty
-        counter.effect_output >> self.occupantCount
-        self > counter
-
+        counter = Function(label="Counting Function From Sensor")
+        counter.hasInput(self.observedProperty)
+        counter.hasOutput(self.occupantCount)
+        
 
 # TODO : NOPE.... should observe something and produce a presence property
 class OccupantPresenceSensor(OccupancySensor):

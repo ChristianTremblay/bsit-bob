@@ -107,6 +107,8 @@ prefixes = {
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "ref": "https://brickschema.org/schema/Brick/ref#",
+    "influxdb": "https://brickschema.org/schema/Brick/ref/influxdb#",
+    "schema": "http://schema.org/",
 }
 
 
@@ -246,6 +248,7 @@ QUDT = bind_namespace("qudt", prefixes["qudt"])
 QUANTITYKIND = bind_namespace("qudtqk", prefixes["qudtqk"])
 UNIT = bind_namespace("unit", prefixes["unit"])
 BRICK = bind_namespace("brick", prefixes["brick"])
+SCHEMAORG = bind_namespace("schema", prefixes["schema"])
 
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
@@ -455,7 +458,13 @@ class Node(metaclass=NodeMetaclass):
 
         if _node_iri is not None:
             if not isinstance(_node_iri, URIRef):
-                raise TypeError(f"URIRef expected: {_node_iri}")
+                # it _node_iri comes from a template, it might be a string
+                if isinstance(_node_iri, str) and _node_iri.startswith(
+                    ("http", "urn:")
+                ):
+                    _node_iri = URIRef(_node_iri)
+                else:
+                    raise TypeError(f"URIRef expected: {_node_iri}")
         elif model_namespace:
             _next_node[model_namespace] += 1
             _node_iri = model_namespace[f"{_next_node[model_namespace]:05d}"]
@@ -1539,6 +1548,21 @@ class EnumerationKind(Node):
         prop._schema_graph.add((self._node_iri, S223.composedOf, prop._node_iri))
         self.composedOf.add(prop)
 
+    def __eq__(self, other: Any) -> bool:
+        # Compare by _node_iri if both are instances
+        if isinstance(other, Node):
+            return getattr(self, "_node_iri", None) == getattr(other, "_node_iri", None)
+        # Compare class objects by identity
+        if isinstance(other, type) and issubclass(other, EnumerationKind):
+            return self is other
+        return False
+
+    def __hash__(self) -> int:
+        # If instance, hash by _node_iri; if class, hash by id(self)
+        if hasattr(self, "_node_iri"):
+            return hash(self._node_iri)
+        return hash(id(self))
+
 
 #
 #   Top Level EnumerationKind Instances
@@ -1623,8 +1647,15 @@ class System(Container):
                         raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
-                    if isinstance(thing, (Equipment, System)):
+                    if isinstance(thing, (Equipment, System, Junction)):
                         self > thing
+                    if isinstance(thing, Connection):
+                        # For reachability, we need to add the connection to the system
+                        # this is purely in python and no RDF relation is created
+                        # When creating equipment or system using template, the internale
+                        # relationships can be created from the template and having the connection
+                        # sqyuare bracket reachable make that possible
+                        self[thing_name] = thing
                     if isinstance(thing, Property):
                         # thing @ self
                         self[thing_name] = thing
@@ -1664,6 +1695,15 @@ class System(Container):
 
         return connection_point
 
+    def __or__(self, other: ConnectionPoint) -> Any:
+        """System.BoundaryConnectionPoint | ConnectionPoint"""
+        _log.debug(f"System.__or__ {self} | {other}")
+
+        if isinstance(other, ConnectionPoint):
+            self.add_boundary_connection_point(other)
+            return self
+        raise TypeError(f"ConnectionPoint expected: {other}")
+
 
 @multimethod
 def contains_mm(system: System, equipment: Equipment) -> None:
@@ -1671,6 +1711,14 @@ def contains_mm(system: System, equipment: Equipment) -> None:
     _log.info(f"system {system} hasMember Equipment {equipment}")
 
     system._data_graph.add((system._node_iri, S223.hasMember, equipment._node_iri))
+
+
+@multimethod
+def contains_mm(system: System, junction: Junction) -> None:
+    """System > Junction"""
+    _log.info(f"system {system} hasMember Junction {junction}")
+
+    system._data_graph.add((system._node_iri, S223.hasMember, junction._node_iri))
 
 
 @multimethod
@@ -1683,13 +1731,13 @@ def contains_mm(system: System, subsystem: System) -> None:
 
 @multimethod
 def contains_mm(system: System, thing_list: List[Node]) -> None:
-    """System > List[Union[Equipment,System]]"""
+    """System > List[Union[Equipment,System, Junction]]"""
     _log.info(f"system {system} hasMember list of things {thing_list}")
 
     ###TODO: the signature should be thing_list: List[Union[Equipment,System]]
 
     for thing in thing_list:
-        if not isinstance(thing, (Equipment, System)):
+        if not isinstance(thing, (Equipment, System, Junction)):
             raise TypeError(f"Equipment or system expected: {thing}")
         contains_mm(system, thing)
 
@@ -2686,7 +2734,7 @@ class BoundaryConnectionPoint:
 
     def __init__(self) -> None:
         _log.debug("BoundaryConnectionPoint.__init__")
-        raise RuntimeError("BoundaryConnectionPoint heirarchy are abstract classes")
+        raise RuntimeError("BoundaryConnectionPoint hierarchy are abstract classes")
 
 
 class OptionalConnectionPoint(BoundaryConnectionPoint):
@@ -3091,9 +3139,31 @@ class Junction(Connectable):
     _class_iri: URIRef = S223.Junction
     hasMedium: Medium
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, config: Dict[str, Any] = {}, **kwargs: Any) -> None:
         _log.debug(f"Junction.__init__ {kwargs}")
+        _config = dict(config.items())
+        for attr_name, attr_value in kwargs.copy().items():
+            if inspect.isclass(attr_value):
+                if issubclass(attr_value, ConnectionPoint):
+                    _config["cp"] = (
+                        {**_config["cp"], **{attr_name: kwargs.pop(attr_name)}}
+                        if "cp" in _config.keys()
+                        else {attr_name: kwargs.pop(attr_name)}
+                    )
+
         super().__init__(**kwargs)
+        if _config:
+            for group_name, group_items in _config.items():
+                if group_name in ("params", "relations"):
+                    continue
+                if group_name == "cp":
+                    for thing_name, thing_class in group_items.items():
+                        setattr(
+                            self,
+                            thing_name,
+                            thing_class(self, label=f"{self.label}.{thing_name}"),
+                        )
+                    continue
 
     def maps_to(self, other: ConnectionPoint) -> None:
         """
@@ -3603,9 +3673,24 @@ class Equipment(Container, Connectable):
                         raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
-                    if isinstance(thing, (Equipment, System, _Sensor, _Producer)):
+                    if isinstance(thing, (Equipment, System, _Sensor, Junction)):
                         self > thing
-                    if isinstance(thing, Property):
+                    elif hasattr(
+                        thing, "objectIdentifier"
+                    ):  # it's a BACnet object, must be contained, will fail if Equipment is not BACnet Device
+                        self > thing
+                    elif thing.__class__.__name__ == "Function":
+                        # For reachability, we need to add the fucntion to the equipment
+                        # this is purely in python and no RDF relation is created
+                        # When creating equipmentusing template, the internal
+                        # relationships can be created from the template and having the connection
+                        # square bracket reachable make that possible
+                        self[thing_name] = thing
+                        try:
+                            self.executes(thing)
+                        except AttributeError:
+                            pass  # not a controller
+                    elif isinstance(thing, Property):
                         self[thing_name] = thing
                         self.add_property(thing)
 
@@ -3637,6 +3722,17 @@ class Equipment(Container, Connectable):
                 )
             else:
                 raise ValueError(f"Incompatible medium {medium} for {each}")
+
+
+class _Function(Node):
+    """
+    Placeholder to prevent circular reference, actual class definition in
+    the bob.functions module.
+
+    Required so thing > function works, otherwise it would be
+    """
+
+    _class_iri: URIRef = None
 
 
 @multimethod
@@ -3684,6 +3780,16 @@ def contains_mm(parent_equipment: Equipment, child_junction: Junction) -> None:
     )
 
 
+@multimethod
+def contains_mm(parent_equipment: Equipment, child_function: _Function) -> None:
+    """Equipment > Equipment"""
+    _log.info(f"equipment {parent_equipment} bob:contains function {child_function}")
+
+    parent_equipment[child_function.label] = child_function
+    # No Graph relation is created, this is purely in python as a function cannot be contained
+    # by an equipment, only executed by a controller
+
+
 class _Sensor(Equipment):
     """
     Placeholder to prevent circular reference, actual class definition in
@@ -3701,25 +3807,6 @@ def contains_mm(equipment: Equipment, sensor: _Sensor) -> None:
     _log.info(f"equipment {equipment} contains sensor {sensor}")
 
     equipment._data_graph.add((equipment._node_iri, S223.contains, sensor._node_iri))
-
-
-class _Producer(Container, Node):
-    """
-    Placeholder to prevent circular reference, actual class definition in
-    the bob.producer module.
-    """
-
-    _class_iri: URIRef = None
-
-
-@multimethod
-def contains_mm(parent_equipment: Equipment, child_producer: _Producer) -> None:
-    """Equipment > Producer"""
-    _log.info(f"Equipment {parent_equipment} contains Producer {child_producer}")
-
-    parent_equipment._data_graph.add(
-        (parent_equipment._node_iri, BOB.contains, child_producer._node_iri)
-    )
 
 
 class DomainSpace(Connectable):

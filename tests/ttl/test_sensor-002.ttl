@@ -2,9 +2,8 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex35: <urn:ex/test_system-007/> .
+@prefix ex42: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix qudtqk: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -22,210 +21,185 @@
   rdfs:label "test_sensor-002" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex35:00001 a s223:Connectable,
+ex42:00001 a s223:Connectable,
         s223:DomainSpace,
         bob:HVACSpace ;
     rdfs:label "CleanRoom HVAC Space" ;
-    s223:cnx ex35:00003,
-        ex35:00004,
-        ex35:00005,
-        ex35:00006,
-        ex35:00007,
-        ex35:00008 ;
-    s223:hasConnectionPoint ex35:00002,
-        ex35:00003,
-        ex35:00004,
-        ex35:00005,
-        ex35:00006,
-        ex35:00007,
-        ex35:00008 ;
+    s223:hasConnectionPoint ex42:00002,
+        ex42:00003,
+        ex42:00004,
+        ex42:00005,
+        ex42:00006,
+        ex42:00007,
+        ex42:00008 ;
     s223:hasDomain s223:Domain-HVAC ;
-    bob:airTransfer ex35:00004 ;
-    bob:doors ex35:00005 ;
-    bob:ductAirInlet ex35:00002 ;
-    bob:ductAirOutlet ex35:00003 ;
-    bob:radiantCooling ex35:00008 ;
-    bob:radiantHeating ex35:00007 ;
-    bob:windows ex35:00006 .
+    bob:airTransfer ex42:00004 ;
+    bob:doors ex42:00005 ;
+    bob:ductAirInlet ex42:00002 ;
+    bob:ductAirOutlet ex42:00003 ;
+    bob:radiantCooling ex42:00008 ;
+    bob:radiantHeating ex42:00007 ;
+    bob:windows ex42:00006 .
 
-ex35:00002 a s223:ConnectionPoint,
+ex42:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.ductAirInlet" ;
-    s223:cnx ex35:00001 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00001 .
+    s223:isConnectionPointOf ex42:00001 .
 
-ex35:00003 a s223:ConnectionPoint,
+ex42:00003 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.ductAirOutlet" ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00001 .
+    s223:isConnectionPointOf ex42:00001 .
 
-ex35:00004 a s223:BidirectionalConnectionPoint,
+ex42:00004 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.airTransfer" ;
-    s223:cnx ex35:00001 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00001 .
+    s223:isConnectionPointOf ex42:00001 .
 
-ex35:00005 a s223:BidirectionalConnectionPoint,
+ex42:00005 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.doors" ;
-    s223:cnx ex35:00001 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00001 .
+    s223:isConnectionPointOf ex42:00001 .
 
-ex35:00006 a s223:BidirectionalConnectionPoint,
+ex42:00006 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.windows" ;
-    s223:cnx ex35:00001 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00001 .
+    s223:isConnectionPointOf ex42:00001 .
 
-ex35:00007 a s223:BidirectionalConnectionPoint,
+ex42:00007 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.radiantHeating" ;
-    s223:cnx ex35:00001 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00001 .
+    s223:isConnectionPointOf ex42:00001 .
 
-ex35:00008 a s223:BidirectionalConnectionPoint,
+ex42:00008 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.radiantCooling" ;
-    s223:cnx ex35:00001 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00001 .
+    s223:isConnectionPointOf ex42:00001 .
 
-ex35:00009 a s223:Connectable,
+ex42:00009 a s223:Connectable,
         s223:DomainSpace,
         bob:HVACSpace ;
     rdfs:label "SAS HVAC Space" ;
-    s223:cnx ex35:00011,
-        ex35:00012,
-        ex35:00013,
-        ex35:00014,
-        ex35:00015,
-        ex35:00016 ;
-    s223:hasConnectionPoint ex35:00010,
-        ex35:00011,
-        ex35:00012,
-        ex35:00013,
-        ex35:00014,
-        ex35:00015,
-        ex35:00016 ;
+    s223:hasConnectionPoint ex42:00010,
+        ex42:00011,
+        ex42:00012,
+        ex42:00013,
+        ex42:00014,
+        ex42:00015,
+        ex42:00016 ;
     s223:hasDomain s223:Domain-HVAC ;
-    bob:airTransfer ex35:00012 ;
-    bob:doors ex35:00013 ;
-    bob:ductAirInlet ex35:00010 ;
-    bob:ductAirOutlet ex35:00011 ;
-    bob:radiantCooling ex35:00016 ;
-    bob:radiantHeating ex35:00015 ;
-    bob:windows ex35:00014 .
+    bob:airTransfer ex42:00012 ;
+    bob:doors ex42:00013 ;
+    bob:ductAirInlet ex42:00010 ;
+    bob:ductAirOutlet ex42:00011 ;
+    bob:radiantCooling ex42:00016 ;
+    bob:radiantHeating ex42:00015 ;
+    bob:windows ex42:00014 .
 
-ex35:00010 a s223:ConnectionPoint,
+ex42:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.ductAirInlet" ;
-    s223:cnx ex35:00009 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00009 .
+    s223:isConnectionPointOf ex42:00009 .
 
-ex35:00011 a s223:ConnectionPoint,
+ex42:00011 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.ductAirOutlet" ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00009 .
+    s223:isConnectionPointOf ex42:00009 .
 
-ex35:00012 a s223:BidirectionalConnectionPoint,
+ex42:00012 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.airTransfer" ;
-    s223:cnx ex35:00009 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00009 .
+    s223:isConnectionPointOf ex42:00009 .
 
-ex35:00013 a s223:BidirectionalConnectionPoint,
+ex42:00013 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.doors" ;
-    s223:cnx ex35:00009 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00009 .
+    s223:isConnectionPointOf ex42:00009 .
 
-ex35:00014 a s223:BidirectionalConnectionPoint,
+ex42:00014 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.windows" ;
-    s223:cnx ex35:00009 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00009 .
+    s223:isConnectionPointOf ex42:00009 .
 
-ex35:00015 a s223:BidirectionalConnectionPoint,
+ex42:00015 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.radiantHeating" ;
-    s223:cnx ex35:00009 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00009 .
+    s223:isConnectionPointOf ex42:00009 .
 
-ex35:00016 a s223:BidirectionalConnectionPoint,
+ex42:00016 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.radiantCooling" ;
-    s223:cnx ex35:00009 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf ex35:00009 .
+    s223:isConnectionPointOf ex42:00009 .
 
-ex35:00017 a s223:PhysicalSpace,
+ex42:00017 a s223:PhysicalSpace,
         bob:Building ;
     rdfs:label "Clients's place" ;
-    s223:contains ex35:00018,
-        ex35:00019,
-        ex35:00020 .
+    s223:contains ex42:00018,
+        ex42:00019,
+        ex42:00020 .
 
-ex35:00018 a s223:PhysicalSpace,
+ex42:00018 a s223:PhysicalSpace,
         bob:Room ;
     rdfs:label "Clean Room #1" ;
-    s223:encloses ex35:00001 .
+    s223:encloses ex42:00001 .
 
-ex35:00019 a s223:PhysicalSpace,
+ex42:00019 a s223:PhysicalSpace,
         bob:Room ;
     rdfs:label "SAS leading to Clean Room #1" ;
-    s223:encloses ex35:00009 .
+    s223:encloses ex42:00009 .
 
-ex35:00020 a s223:PhysicalSpace,
+ex42:00020 a s223:PhysicalSpace,
         bob:MechanicalRoom,
         bob:Room ;
     rdfs:label "Mechanical room for Clean Room #1" .
 
-ex35:00021 a s223:Connectable,
+ex42:00021 a s223:Connectable,
         s223:Equipment,
         s223:PressureSensor,
         s223:Sensor ;
     rdfs:label "TPD-01" ;
-    s223:contains ex35:00029,
-        ex35:00031 ;
-    s223:hasPhysicalLocation ex35:00020 ;
-    s223:hasProperty ex35:00022,
-        ex35:00023,
-        ex35:00024 ;
-    s223:observes ex35:00022 ;
-    bob:contains ex35:00025,
-        ex35:00033 ;
-    bob:differential_static_pressure ex35:00022 ;
-    bob:observation_pressure ex35:00023 ;
-    bob:reference_pressure ex35:00024 ;
+    s223:hasObservationLocation ex42:00001 ;
+    s223:hasPhysicalLocation ex42:00020 ;
+    s223:hasProperty ex42:00022,
+        ex42:00023,
+        ex42:00024 ;
+    s223:hasReferenceLocation ex42:00009 ;
+    s223:observes ex42:00022 ;
+    bob:differential_static_pressure ex42:00022 ;
+    bob:hasReferenceLocation ex42:00009 ;
+    bob:observation_pressure ex42:00023 ;
+    bob:reference_pressure ex42:00024 ;
     rdfs:comment "Static Pressure between Clean Room (+) and SAS (-)" .
 
-ex35:00022 a s223:ObservableProperty,
+ex42:00022 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -236,7 +210,7 @@ ex35:00022 a s223:ObservableProperty,
     qudt:hasUnit unit:PA ;
     qudt:isDeltaQuantity true .
 
-ex35:00023 a s223:ObservableProperty,
+ex42:00023 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -246,7 +220,7 @@ ex35:00023 a s223:ObservableProperty,
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
 
-ex35:00024 a s223:ObservableProperty,
+ex42:00024 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -256,82 +230,10 @@ ex35:00024 a s223:ObservableProperty,
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
 
-ex35:00025 a p223:Producer,
-        bob:Differential ;
-    rdfs:label "diff_causality" ;
-    s223:hasInput ex35:00026,
-        ex35:00027 ;
-    s223:hasOutput ex35:00028 ;
-    bob:differential_output ex35:00028 ;
-    bob:high_input ex35:00026 ;
-    bob:low_input ex35:00027 ;
+ex42:00025 a s223:Function ;
+    rdfs:label "differential calculation" ;
+    s223:hasInput ex42:00023,
+        ex42:00024 ;
+    s223:hasOutput ex42:00022 ;
     rdfs:comment "Will output High minus Low" .
-
-ex35:00026 a p223:ProducerInput ;
-    rdfs:label "diff_causality.high_input" ;
-    s223:uses ex35:00023 .
-
-ex35:00027 a p223:ProducerInput ;
-    rdfs:label "diff_causality.low_input" ;
-    s223:uses ex35:00024 .
-
-ex35:00028 a p223:ProducerOutput ;
-    rdfs:label "diff_causality.differential_output" ;
-    s223:produces ex35:00022 .
-
-ex35:00029 a s223:Connectable,
-        s223:Equipment,
-        s223:PressureSensor,
-        s223:Sensor ;
-    rdfs:label "highPort" ;
-    s223:hasObservationLocation ex35:00001 ;
-    s223:observes ex35:00030 .
-
-ex35:00030 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Pressure ;
-    rdfs:label "highPort.GaugePressure" ;
-    s223:ofMedium s223:Fluid-Water ;
-    qudt:hasQuantityKind qudtqk:Pressure ;
-    qudt:hasUnit unit:PA .
-
-ex35:00031 a s223:Connectable,
-        s223:Equipment,
-        s223:PressureSensor,
-        s223:Sensor ;
-    rdfs:label "lowPort" ;
-    s223:hasObservationLocation ex35:00009 ;
-    s223:observes ex35:00032 .
-
-ex35:00032 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Pressure ;
-    rdfs:label "lowPort.GaugePressure" ;
-    s223:ofMedium s223:Fluid-Water ;
-    qudt:hasQuantityKind qudtqk:Pressure ;
-    qudt:hasUnit unit:PA .
-
-ex35:00033 a p223:Producer,
-        bob:Differential ;
-    rdfs:label "output" ;
-    s223:hasInput ex35:00034,
-        ex35:00035 ;
-    s223:hasOutput ex35:00036 ;
-    bob:differential_output ex35:00036 ;
-    bob:high_input ex35:00034 ;
-    bob:low_input ex35:00035 ;
-    rdfs:comment "Will output High minus Low" .
-
-ex35:00034 a p223:ProducerInput ;
-    rdfs:label "output.high_input" .
-
-ex35:00035 a p223:ProducerInput ;
-    rdfs:label "output.low_input" .
-
-ex35:00036 a p223:ProducerOutput ;
-    rdfs:label "output.differential_output" .
 
