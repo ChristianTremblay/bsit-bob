@@ -4,7 +4,7 @@ from typing import Any, Tuple
 from bob.functions import Function
 from bob.properties.force import DifferentialStaticPressure, Pressure
 
-from ..core import BOB, INCLUDE_INVERSE, S223, Node, PropertyReference, Connectable
+from ..core import BOB, INCLUDE_INVERSE, S223, Node, PropertyReference, LocationReference
 from ..enum import Air, Water
 from ..properties import DifferentialStaticPressure
 from .sensor import Sensor, split_kwargs
@@ -42,29 +42,36 @@ class DifferentialStaticPressureSensor(Sensor):
     observation_pressure: Pressure
     reference_pressure: Pressure
     differential_static_pressure: DifferentialStaticPressure
-    hasObservationLocation: Connectable
-    hasReferenceLocation: Connectable
+    hasObservationLocation: LocationReference
+    hasReferenceLocation: LocationReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
 
-    def add_hasObservationLocation(self, node: Tuple[Node, Node]) -> None:
+    def add_hasReferenceLocation(self, node: Node) -> None:
         # link the two together
-        observation_location, reference_location = node
+        reference_location = node
         self._data_graph.add(
             (self._node_iri, S223.hasReferenceLocation, reference_location._node_iri)
         )
-        self._data_graph.add(
-            (
-                self._node_iri,
-                S223.hasObservationLocation,
-                observation_location._node_iri,
-            )
-        )
-        self.hasObservationLocation = observation_location
         self.hasReferenceLocation = reference_location
+
+    def add_hasObservationLocation(self, node: Node) -> None:
+        """
+        When defining the observation localtion and the reference location with a template
+        we can use the same function twice. First run will set the observation location, 
+        second run will set the reference location.
+        """ 
+        if self.hasObservationLocation is not None:
+            self.add_hasReferenceLocation(node)
+
+        else:
+            self._data_graph.add(
+                (self._node_iri, S223.hasObservationLocation, node._node_iri)
+            )
+            self.hasObservationLocation = node
 
 
 class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
