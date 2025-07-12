@@ -2017,13 +2017,18 @@ class ConnectionPoint(Node):
         if not isinstance(other, ConnectionPoint):
             raise TypeError("ConnectionPoint expected")
 
+    
+        # self is entry point of contained equipment, so it cannot be connected
         if self.connectsThrough:
             raise RuntimeError("connection point connected")
         if self.mapsTo:
             raise RuntimeError("connection point mapped")
-        if other.connectsThrough:
-            raise RuntimeError("other connection point connected")
-
+        # target can be connected, it's the goal
+        #if other.connectsThrough:
+        #    raise RuntimeError("other connection point connected")
+        self._data_graph.add(
+                (self._node_iri, S223.mapsTo, other._node_iri)
+            )
         self.mapsTo = other
 
     def paired_to(self, other: ConnectionPoint) -> None:
@@ -2314,7 +2319,7 @@ def connect_mm(equipment: Equipment, connection_point: ConnectionPoint) -> None:
             f"no candidate sources from {equipment} to {connection_point}"
         )
     if len(from_out) > 1:
-        raise RuntimeError("too many candidate connection points")
+        raise RuntimeError(f"too many candidate connection points from {equipment} to {connection_point} -> {from_out}")
     from_thing = from_out.pop()
     _log.debug(f"    - from_thing: {from_thing}")
 
@@ -3018,7 +3023,9 @@ class ZoneConnectionPoint(Node):
 
         if not isinstance(other, (Junction, ConnectionPoint)):
             raise TypeError("ConnectionPoint expected")
-
+        self._data_graph.add(
+                (self._node_iri, S223.mapsTo, other._node_iri)
+            )
         self.mapsTo = other
 
 
@@ -3196,6 +3203,9 @@ class Junction(Connectable):
         connection_point = other.__class__(self)
         _log.debug(f"    - new connection point: {connection_point}")
 
+        self._data_graph.add(
+                (connection_point._node_iri, S223.mapsTo, other._node_iri)
+            )
         connection_point.mapsTo = other
 
 
