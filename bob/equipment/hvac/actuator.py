@@ -7,7 +7,7 @@ from ...template import configure_relations, template_update
 # logging
 _log = logging.getLogger(__name__)
 
-_namespace = BOB
+_namespace = S223
 
 """
  
