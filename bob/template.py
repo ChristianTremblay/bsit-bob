@@ -137,6 +137,7 @@ def configure_relations(
         elif target is None and isinstance(target_element, ConnectionPoint):
             target = target_element
         elif target is None:
+            print(f"Target {target_key} not found in {target_element}")
             try:
                 target = target_element[target_key]
             except KeyError:
@@ -420,8 +421,10 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
             expr = f"[{parts[0]}]"
         else:
             expr = f"self['{parts[0]}']"
-        for part in parts[1:]:
-            expr += f".{part}"
+        for part in parts[1:-1]:
+            expr += f"['{part}']"
+        if len(parts) > 1:
+            expr += f".{parts[-1]}"
         return expr
 
     def parse_sub_properties(a):

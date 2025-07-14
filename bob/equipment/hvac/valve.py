@@ -97,7 +97,7 @@ class ThreeWayValveMixing(Valve):
 
     _class_iri: URIRef = S223.ThreeWayValve
     fluidInletA: WaterInletConnectionPoint
-    fluidInletB: WaterOutletConnectionPoint
+    fluidInletB: WaterInletConnectionPoint
     fluidOutlet: WaterOutletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
