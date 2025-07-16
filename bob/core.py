@@ -124,6 +124,8 @@ INCLUDE_INVERSE = os.getenv("INCLUDE_INVERSE", "False") == "True"
 # connection requires hasMedium
 CONNECTION_HAS_MEDIUM = os.getenv("CONNECTION_HAS_MEDIUM", "True") == "True"
 
+# show inspection warnings (may clutter the output)
+SHOW_INSPECTION_WARNINGS = os.getenv("SHOW_INSPECTION_WARNINGS", "True") == "True"
 #
 #
 #
@@ -684,9 +686,10 @@ class Node(metaclass=NodeMetaclass):
                     cls._schema_graph.add((sh_property, SH.datatype, attr_type))
 
             elif attr_origin in (Any, Dict, Set, List, Union, list, set, dict):
-                warnings.warn(
-                    f"class {cls}, attribute {attr}: inspection not supported {attr_type}"
-                )
+                if SHOW_INSPECTION_WARNINGS:
+                    warnings.warn(
+                        f"class {cls}, attribute {attr}: inspection not supported {attr_type}"
+                    )
 
                 cls._nodes[attr] = attr_type
                 cls._attr_uriref[attr] = attr_uriref
