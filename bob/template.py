@@ -20,6 +20,7 @@ try:
     from rich import print as rich_print
     from rich.console import Console
     from rich.panel import Panel
+
     _RICH_AVAILABLE = True
     console = Console()
 except ImportError:
@@ -27,6 +28,7 @@ except ImportError:
     rich_print = print
     console = None
     Panel = None
+
 
 def print_console(msg, style=None, panel=False):
     if _RICH_AVAILABLE:
@@ -212,9 +214,9 @@ def configure_relations(
 class SystemFromTemplate(System):
     def __init__(self, config: t.Dict = None, **kwargs):
         print_console(
-            Panel(
-                f"[bold blue]Creating System {config['params']['label']}[/bold blue]"
-            )
+            f"[bold blue]Creating System {config['params']['label']}[/bold blue]",
+            panel=True,
+            style="bold blue",
         )
         required_class = (
             config.pop("template_class") if "template_class" in config else [System]
@@ -251,9 +253,9 @@ class SystemFromTemplate(System):
 class EquipmentFromTemplate(Equipment):
     def __init__(self, config: t.Dict = None, **kwargs):
         print_console(
-            Panel(
-                f"[bold blue]Creating Equipment {config['params']['label']}[/bold blue]"
-            )
+            f"[bold blue]Creating Equipment {config['params']['label']}[/bold blue]",
+            panel=True,
+            style="bold blue",
         )
         required_class = (
             config.pop("template_class") if "template_class" in config else Equipment
