@@ -4,9 +4,6 @@ import re
 import typing as t
 import warnings
 from pathlib import Path
-from rich import print as rich_print
-from rich.console import Console
-from rich.panel import Panel
 import yaml
 
 from .core import (
@@ -18,7 +15,27 @@ from .core import (
 )
 from .introspection import get_class_from_name
 
-console = Console()
+# Optional rich import
+try:
+    from rich import print as rich_print
+    from rich.console import Console
+    from rich.panel import Panel
+    _RICH_AVAILABLE = True
+    console = Console()
+except ImportError:
+    _RICH_AVAILABLE = False
+    rich_print = print
+    console = None
+    Panel = None
+
+def print_console(msg, style=None, panel=False):
+    if _RICH_AVAILABLE:
+        if panel and Panel is not None:
+            console.print(Panel(msg, style=style if style else ""))
+        else:
+            console.print(msg, style=style if style else "")
+    else:
+        print(msg)
 
 
 def template_update(base: t.Dict = {}, config: t.Dict = None, bases: t.List = None):
@@ -94,7 +111,7 @@ def get_instance(container: t.Union[Equipment, System], blob: str):
 
 def configure_boundaries(container: System, boundaries: t.List[t.Tuple[str, str]]):
     if len(boundaries) > 0:
-        console.print("[green]Configuring boundaries[/green]")
+        print_console("[green]Configuring boundaries[/green]")
     for _target in boundaries:
         target_element, target_key = get_instance(container, _target)
 
@@ -108,7 +125,7 @@ def configure_boundaries(container: System, boundaries: t.List[t.Tuple[str, str]
         elif target is None:
             raise AttributeError(f"Target {target_key} not found in {target_element}")
 
-        console.print(f"{container} [green]|[/green] {target}")
+        print_console(f"{container} [green]|[/green] {target}")
         container | target
 
 
@@ -116,7 +133,7 @@ def configure_relations(
     container: t.Union[Equipment, System], relations: t.List[t.Tuple[str, str, str]]
 ):
     if len(relations) > 0:
-        console.print("[green]Configuring relations[/green]")
+        print_console("[green]Configuring relations[/green]")
     for relation in relations:
         _source, operator, _target = relation
         source_element, source_key = get_instance(container, _source)
@@ -146,7 +163,7 @@ def configure_relations(
         elif target is None and isinstance(target_element, ConnectionPoint):
             target = target_element
         elif target is None:
-            console.print(
+            print_console(
                 f"[yellow]Target {target_key} not found in {target_element}[/yellow]"
             )
             try:
@@ -156,7 +173,7 @@ def configure_relations(
                     f"Target {target_key} not found in {target_element}"
                 )
 
-        console.print(f"{source} [green]{operator}[/green] {target}")
+        print_console(f"{source} [green]{operator}[/green] {target}")
 
         if operator == "=":
             if source is None:
@@ -166,10 +183,10 @@ def configure_relations(
                 except AttributeError:
                     setattr(container, source_key, target)
                 except TypeError as error:
-                    console.print(f"[red]{error}[/red]")
-                    console.print(f"[yellow]Container :[/yellow] {container}")
-                    console.print(f"[yellow]Source :[/yellow] {source} {source_key}")
-                    console.print(f"[yellow]Target :[/yellow] {target} {target_key}")
+                    print_console(f"[red]{error}[/red]")
+                    print_console(f"[yellow]Container :[/yellow] {container}")
+                    print_console(f"[yellow]Source :[/yellow] {source} {source_key}")
+                    print_console(f"[yellow]Target :[/yellow] {target} {target_key}")
             else:
                 source = target
         elif operator == ">>":
@@ -194,7 +211,7 @@ def configure_relations(
 
 class SystemFromTemplate(System):
     def __init__(self, config: t.Dict = None, **kwargs):
-        console.print(
+        print_console(
             Panel(
                 f"[bold blue]Creating System {config['params']['label']}[/bold blue]"
             )
@@ -222,18 +239,18 @@ class SystemFromTemplate(System):
         )
         self.__class__ = DynamicClass
 
-        console.print(
+        print_console(
             f"Instanciating as {[klass.__name__ for klass in required_class]}"
         )
         DynamicClass.__init__(self, _config, **kwargs)
-        console.print(f"[green]✔ System created.[/green]")
+        print_console(f"[green]✔ System created.[/green]")
         configure_relations(self, _relations)
         configure_boundaries(self, _boundaries)
 
 
 class EquipmentFromTemplate(Equipment):
     def __init__(self, config: t.Dict = None, **kwargs):
-        console.print(
+        print_console(
             Panel(
                 f"[bold blue]Creating Equipment {config['params']['label']}[/bold blue]"
             )
@@ -257,11 +274,11 @@ class EquipmentFromTemplate(Equipment):
             {},
         )
         self.__class__ = DynamicClass
-        console.print(
+        print_console(
             f"Instanciating as {[klass.__name__ for klass in required_class]}"
         )
         DynamicClass.__init__(self, _config, **kwargs)
-        console.print(f"[green]✔ Equipment created.[/green]")
+        print_console(f"[green]✔ Equipment created.[/green]")
         configure_relations(self, _relations)
 
 
