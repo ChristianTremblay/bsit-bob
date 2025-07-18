@@ -41,7 +41,7 @@ def test_create_mix_medium_air_with_constituents(bob_fixture):
     assert Argon in myair._constituents
     assert CO2 in myair._constituents
 
-    assert len(myair.composedOf) == 4
+    assert len(myair.composedOf) == 5 # including vapor-h2o
 
 
 def test_create_a_co2_sensor(bob_fixture):

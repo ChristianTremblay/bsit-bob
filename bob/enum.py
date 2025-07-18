@@ -32,6 +32,7 @@ Substance.Soot = Soot = Substance("Soot")
 # ======================================
 #
 Constituent.H2O = H2O = Constituent("H2O", label="H2O")
+Constituent.Vapor_H2O = Vapor_H2O = Constituent("Vapor-H2O", _alt_namespace=P223)
 Constituent.Oil = Oil = Constituent("Oil", label="Oil", _alt_namespace=P223)
 Constituent.Smoke = Smoke = Constituent("Smoke", label="Smoke", _alt_namespace=P223)
 # Gases
@@ -197,6 +198,7 @@ PowerAndSignal.USB.add_constituent(Electricity.DC5V)
 # Air and gases
 Mix.Fluid = Fluid = Mix("Fluid")
 Fluid.Air = Air = Fluid("Air")
+Air.add_constituent(Vapor_H2O)
 Fluid.Oil = Oil = Fluid("Oil")
 Air.CompressedAir = CompressedAir = Air("CompressedAir")
 
@@ -247,6 +249,7 @@ GlycolSolution.GlycolSolution_30Percent = GlycolSolution_30Percent = GlycolSolut
 )  # constituent in S223 already
 
 Water.Steam = Steam = Water("Steam")
+
 
 # Light
 Light.Visible = Light("Visible")

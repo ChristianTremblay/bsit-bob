@@ -1,9 +1,9 @@
 import copy
+import importlib
 import re
 import typing as t
-from pathlib import Path
-import importlib
 import warnings
+from pathlib import Path
 
 import yaml
 
@@ -15,6 +15,30 @@ from .core import (
     System,
 )
 from .introspection import get_class_from_name
+
+# Optional rich import
+try:
+    from rich import print as rich_print
+    from rich.console import Console
+    from rich.panel import Panel
+
+    _RICH_AVAILABLE = True
+    console = Console()
+except ImportError:
+    _RICH_AVAILABLE = False
+    rich_print = print
+    console = None
+    Panel = None
+
+
+def print_console(msg, style=None, panel=False):
+    if _RICH_AVAILABLE:
+        if panel and Panel is not None:
+            console.print(Panel(msg, style=style if style else ""))
+        else:
+            console.print(msg, style=style if style else "")
+    else:
+        print(msg)
 
 
 def template_update(base: t.Dict = {}, config: t.Dict = None, bases: t.List = None):
@@ -80,15 +104,17 @@ def get_instance(container: t.Union[Equipment, System], blob: str):
         return (thing, None)
     else:
         _key = blob.split(".")[1]
-        #try:
+        # try:
         thing = getattr(container, _key)
-        #except AttributeError:
+        # except AttributeError:
         #    thing = container[_key]
         # print(thing, _key)
         return (thing, _key)  # in case thing is None
 
 
 def configure_boundaries(container: System, boundaries: t.List[t.Tuple[str, str]]):
+    if len(boundaries) > 0:
+        print_console("[green]Configuring boundaries[/green]")
     for _target in boundaries:
         target_element, target_key = get_instance(container, _target)
 
@@ -102,12 +128,15 @@ def configure_boundaries(container: System, boundaries: t.List[t.Tuple[str, str]
         elif target is None:
             raise AttributeError(f"Target {target_key} not found in {target_element}")
 
+        print_console(f"{container} [green]|[/green] {target}")
         container | target
 
 
 def configure_relations(
     container: t.Union[Equipment, System], relations: t.List[t.Tuple[str, str, str]]
 ):
+    if len(relations) > 0:
+        print_console("[green]Configuring relations[/green]")
     for relation in relations:
         _source, operator, _target = relation
         source_element, source_key = get_instance(container, _source)
@@ -123,7 +152,9 @@ def configure_relations(
             try:
                 source = source_element[source_key]
             except KeyError:
-                raise AttributeError(f"Source {source_key} not found in {source_element}")
+                raise AttributeError(
+                    f"Source {source_key} not found in {source_element}"
+                )
 
         if target_key is None:
             target = target_element
@@ -132,14 +163,20 @@ def configure_relations(
 
         if target is None and isinstance(target_element, Connection):
             target = target_element
+        elif target is None and isinstance(target_element, ConnectionPoint):
+            target = target_element
         elif target is None:
+            print_console(
+                f"[yellow]Target {target_key} not found in {target_element}[/yellow]"
+            )
             try:
                 target = target_element[target_key]
             except KeyError:
-                raise AttributeError(f"Target {target_key} not found in {target_element}")
+                raise AttributeError(
+                    f"Target {target_key} not found in {target_element}"
+                )
 
-        print(f"Configuring relation: {source} {operator} {target}")
-
+        print_console(f"{source} [green]{operator}[/green] {target}")
 
         if operator == "=":
             if source is None:
@@ -149,11 +186,10 @@ def configure_relations(
                 except AttributeError:
                     setattr(container, source_key, target)
                 except TypeError as error:
-                    print(error)
-                    print("Container :", container)
-                    print("Source :", source, source_key)
-                    print("Target :", target, target_key)
-
+                    print_console(f"[red]{error}[/red]")
+                    print_console(f"[yellow]Container :[/yellow] {container}")
+                    print_console(f"[yellow]Source :[/yellow] {source} {source_key}")
+                    print_console(f"[yellow]Target :[/yellow] {target} {target_key}")
             else:
                 source = target
         elif operator == ">>":
@@ -163,7 +199,7 @@ def configure_relations(
         elif operator == "%":
             source % target
         elif operator == "mapsTo":
-            source.mapsTo = target
+            source.maps_to(target)
         elif operator == "@":
             source @ target
         elif operator == "|":
@@ -178,6 +214,12 @@ def configure_relations(
 
 class SystemFromTemplate(System):
     def __init__(self, config: t.Dict = None, **kwargs):
+        _label = kwargs.get("label", config.get("params", {}).get("label"))
+        print_console(
+            f"[bold blue]Creating System {_label}[/bold blue]",
+            panel=True,
+            style="bold blue",
+        )
         required_class = (
             config.pop("template_class") if "template_class" in config else [System]
         )
@@ -201,14 +243,22 @@ class SystemFromTemplate(System):
         )
         self.__class__ = DynamicClass
 
+        print_console(
+            f"Instanciating as {[klass.__name__ for klass in required_class]}"
+        )
         DynamicClass.__init__(self, _config, **kwargs)
-
+        print_console(f"[green]✔ System created.[/green]")
         configure_relations(self, _relations)
         configure_boundaries(self, _boundaries)
 
 
 class EquipmentFromTemplate(Equipment):
     def __init__(self, config: t.Dict = None, **kwargs):
+        print_console(
+            f"[bold blue]Creating Equipment {config['params']['label']}[/bold blue]",
+            panel=True,
+            style="bold blue",
+        )
         required_class = (
             config.pop("template_class") if "template_class" in config else Equipment
         )
@@ -228,9 +278,11 @@ class EquipmentFromTemplate(Equipment):
             {},
         )
         self.__class__ = DynamicClass
-
+        print_console(
+            f"Instanciating as {[klass.__name__ for klass in required_class]}"
+        )
         DynamicClass.__init__(self, _config, **kwargs)
-
+        print_console(f"[green]✔ Equipment created.[/green]")
         configure_relations(self, _relations)
 
 
@@ -246,7 +298,17 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                 raise FileNotFoundError(f"YAML file {yaml_file} not found")
             with open(yaml_file, "r") as file:
                 yaml_content = yaml.safe_load(file)
-    _text_values = ["label", "comment", "hasValue", "config", "vendorIdentifier", "objectIdentifier", "objectName", "description"]
+    # those values will be taken as-is
+    _text_values = [
+        "label",
+        "comment",
+        "hasValue",
+        "config",
+        "vendorIdentifier",
+        "objectIdentifier",
+        "objectName",
+        "description",
+    ]
     _dict = {}
     name = yaml_content["name"]
     params = yaml_content["params"]
@@ -302,13 +364,18 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
             return
         _dict[entities_category] = {}
         if entities_category == "cp":
+            # if len(entities.items()) > 0:
+            #    console.rule(f"[bold yellow]Defining {entities_category}[/bold yellow]")
             for entity_name, _entity_class in entities.items():
                 # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
                 entity_class = get_class_from_name(_entity_class)
                 entity_label = entity_name
                 # ConnectionPoint
-                _dict[entities_category][entity_label] = entity_class  
+                _dict[entities_category][entity_label] = entity_class
+                # console.print(f"    {entity_label} [green]:[/green] {entity_class}")
         else:
+            # if len(entities.items()) > 0:
+            #    console.rule(f"[green]Defining {entities_category}[/green]")
             for entity_name, entity_params in entities.items():
                 # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
                 entity_label = entity_params.pop("label", entity_name)
@@ -319,11 +386,12 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                     raise KeyError(
                         f"Entity {entity_name} in {entities_category} does not have a 'class' key"
                     )
-                # print('Found class', entity_class)
-                # entity_comment = entity_params.pop('comment', '')
 
+                # If no exception, we can define the entity
                 else:
                     _dict[entities_category][(entity_label, entity_class)] = {}
+                    # console.print(f"    {entity_label} [green]:[/green] {entity_class}")
+
                     for _name, _class_or_value in entity_params.items():
                         _value = (
                             _class_or_value
@@ -334,6 +402,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                         _dict[entities_category][(entity_label, entity_class)][
                             _name
                         ] = _value
+                        # console.print(f"        {_name} [green]:[/green] {_value}")
 
     # print('Defining entities')
     define_entities(equipment, "equipment")
@@ -347,6 +416,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     from_catalog = yaml_content.get("from_catalog", None)
 
     if from_catalog is not None:
+        # console.print("[green]Importing entities from catalog[/green]")
         catalog_module, catalog_lookup_function = yaml_content.get(
             "catalog_source", ""
         ).split("|")
@@ -355,9 +425,8 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
             importlib.import_module(catalog_module), catalog_lookup_function
         )
 
-
-
         for entity_name, entity_params in from_catalog.items():
+            # console.print(f"    [purple]Defining {entity_name} from catalog[/purple]: ")
             # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
             entity_label = entity_params.pop("label", entity_name)
             # print(entity_label, entity_params, f"Looking for {entity_params['template']}")
@@ -379,10 +448,8 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                     with open(Path(_addon)) as _addon_file:
                         _addon_dict = yaml.safe_load(_addon_file)
                     template = template_update(template, _addon_dict)
-                    
-                _template_config = config_from_yaml(
-                    template
-                )
+
+                _template_config = config_from_yaml(template)
 
                 if "System" in _template_config["template_class"]:
                     _dict["equipment"][(entity_label, SystemFromTemplate)] = {
@@ -399,7 +466,6 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                 )
     define_entities(bacnet, "bacnet")
     define_entities(functions, "functions")
-    
 
     _dict["relations"] = []
     if template_class[0] is System:
@@ -411,8 +477,10 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
             expr = f"[{parts[0]}]"
         else:
             expr = f"self['{parts[0]}']"
-        for part in parts[1:]:
-            expr += f".{part}"
+        for part in parts[1:-1]:
+            expr += f"['{part}']"
+        if len(parts) > 1:
+            expr += f".{parts[-1]}"
         return expr
 
     def parse_sub_properties(a):
@@ -434,12 +502,14 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
         instead of the dot notation.
         In the template, we are using " / " to separate the property name
         from the object name.
-        Keeping the parse_sub option for the last part as we can have the need to 
+        Keeping the parse_sub option for the last part as we can have the need to
         access a property of the property, like the bacnet presentValue.
         """
         line = line.replace("(", "").replace(")", "").strip()
         _a, _b = line.split(separator)
-        _dict["relations"].append((parse_sub_properties(_a), operator, parse_sub_properties(_b)))
+        _dict["relations"].append(
+            (parse_sub_properties(_a), operator, parse_sub_properties(_b))
+        )
         # print(parse_sub(_a), operator, parse_sub(_b))
 
     # Explicit relations with operator in the yaml file
@@ -470,15 +540,12 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                 add_to_relation_dict(_connection, "hasOutput", separator=" -> ")
         if re.match(r".*_references$", key) and isinstance(value, list):
             for _connection in value:
-                print(f"Adding reference to relation dict: {_connection}")
-                add_to_relation_dict(
-                    _connection, "@", separator=" -> "
-                )
+                add_to_relation_dict(_connection, "@", separator=" -> ")
 
     # observation location
     observation_location = yaml_content.get("sensors_observation_location", [])
     for _observations in observation_location:
-        add_to_relation_dict(_observations, "%", separator=" -> ")
+        add_to_relation_dict(f"{_observations}", "%", separator=" -> ")
     boundaries = yaml_content.get("boundaries", [])
     for _boundary in boundaries:
         # add_to_relation_dict(_boundary, "|", separator=" -> ")
