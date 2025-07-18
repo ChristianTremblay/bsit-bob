@@ -4,6 +4,7 @@ import re
 import typing as t
 import warnings
 from pathlib import Path
+
 import yaml
 
 from .core import (
@@ -213,8 +214,9 @@ def configure_relations(
 
 class SystemFromTemplate(System):
     def __init__(self, config: t.Dict = None, **kwargs):
+        _label = kwargs.get("label", config.get("params", {}).get("label"))
         print_console(
-            f"[bold blue]Creating System {config['params']['label']}[/bold blue]",
+            f"[bold blue]Creating System {_label}[/bold blue]",
             panel=True,
             style="bold blue",
         )
