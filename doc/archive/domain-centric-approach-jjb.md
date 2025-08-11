@@ -458,3 +458,4 @@ For those reasons and all the other presented here I'm convinced that the
 domain-centric approach is superior and easier to implement than the
 cross-domain approach. I already built different models and the flexibility of
 this approach has been proven each times. 
+
