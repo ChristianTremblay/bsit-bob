@@ -100,7 +100,5 @@ html_theme_options = {
 exclude_patterns = [
     "archive/**",
     "_build/**",
-    "_artifacts/**",
-    # add more if needed:
-    # "examples/**",
+    # do NOT exclude _artifacts; we literal-include TTLs from there
 ]

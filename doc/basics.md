@@ -18,14 +18,40 @@ This section mirrors the simplest patterns covered by tests and builds up progre
 YAML template
 ```{literalinclude} examples/fan_device.yaml
 :language: yaml
+:caption: Example: fan_device.yaml
 ```
 
 Equivalent Python
 ```{literalinclude} examples/fan_device.py
 :language: python
+:caption: Example: fan_device.py
 ```
 
-![Rendered graph](_static/artifacts/basics_fan.svg)
+```{figure} _static/artifacts/basics_fan.svg
+:alt: Fan example graph
+:align: center
+
+Figure: basics_fan graph
+```
+
+```{admonition} Legend (SVG)
+- Boxes: Equipment, Systems, Spaces, and other nodes
+- Circles: s223:Property
+- Diamonds: s223:ConnectionPoint
+- Edge labels: s223 predicates (contains, hasMember, hasProperty, connectsAt, mapsTo, …)
+```
+
+```{literalinclude} _artifacts/basics_fan.ttl
+:language: turtle
+:caption: Listing: basics_fan.ttl
+```
+
+```{admonition} Legend (TTL)
+- Prefixes declare namespaces (S223, BOB, EX, …)
+- Triples are subject predicate object . in Turtle syntax
+- Predicates align with s223 relations (contains, hasMember, hasProperty, connectsAt, …)
+- The SVG filters common predicates; the TTL shows the full model content
+```
 
 ---
 
@@ -34,11 +60,36 @@ Equivalent Python
 YAML template
 ```{literalinclude} examples/ahu_system.yaml
 :language: yaml
+:caption: Example: ahu_system.yaml
 ```
 
 Equivalent Python
 ```{literalinclude} examples/ahu_system.py
 :language: python
+:caption: Example: ahu_system.py
 ```
 
-![Rendered graph](_static/artifacts/basics_ahu.svg)
+```{figure} _static/artifacts/basics_ahu.svg
+:alt: AHU example graph
+:align: center
+
+Figure: basics_ahu graph
+```
+
+```{admonition} Legend (SVG)
+- Boxes: Equipment, Systems, Spaces, and other nodes
+- Circles: s223:Property
+- Diamonds: s223:ConnectionPoint
+- Edge labels: s223 predicates (contains, hasMember, hasProperty, connectsAt, mapsTo, …)
+```
+
+```{literalinclude} _artifacts/basics_ahu.ttl
+:language: turtle
+:caption: Listing: basics_ahu.ttl
+```
+
+```{admonition} Legend (TTL)
+- Prefixes declare namespaces (S223, BOB, EX, …)
+- Triples are subject predicate object . in Turtle syntax
+- Predicates align with s223 relations (contains, hasMember, hasProperty, connectsAt, …)
+- The SVG filters common predicates; the TTL shows the full

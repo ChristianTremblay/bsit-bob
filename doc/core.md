@@ -75,9 +75,34 @@ dump(schema_graph, filename="build/schema.ttl")
 Minimal Python example (runnable)
 ```{literalinclude} examples/core_minimal.py
 :language: python
+:caption: Example: core_minimal.py
 ```
 
-![Rendered graph](_static/artifacts/core_minimal.svg)
+```{figure} _static/artifacts/core_minimal.svg
+:alt: Core minimal graph
+:align: center
+
+Figure: core_minimal graph
+```
+
+```{admonition} Legend (SVG)
+- Boxes: Equipment, Systems, Spaces, and other nodes
+- Circles: s223:Property
+- Diamonds: s223:ConnectionPoint
+- Edge labels: s223 predicates (contains, hasMember, hasProperty, connectsAt, mapsTo, …)
+```
+
+```{literalinclude} _artifacts/core_minimal.ttl
+:language: turtle
+:caption: Listing: core_minimal.ttl
+```
+
+```{admonition} Legend (TTL)
+- Prefixes declare namespaces (S223, BOB, EX, …)
+- Triples are subject predicate object . in Turtle syntax
+- Predicates align with s223 relations (contains, hasMember, hasProperty, connectsAt, …)
+- The SVG filters common predicates; the TTL shows the full model content
+```
 
 Notes
 - Connection operators (>>, <<) dispatch to connect_mm multimethods that validate CP direction and medium compatibility.
