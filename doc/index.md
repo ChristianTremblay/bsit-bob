@@ -8,6 +8,8 @@ Build ASHRAE 223P-compliant models using YAML and Python. This documentation foc
 
 getting-started.md
 environment.md
+core.md
+enum.md
 basics.md
 syntax-operators.md
 syntax.md
@@ -18,11 +20,11 @@ controllers-and-bacnet.md
 references.md
 systems-vs-equipment.md
 equipment.md
-sensors.md
 spaces.md
 properties.md
 externalreferences.md
 connections.md
+templates-and-catalog.md
 validation-and-export.md
 examples-from-tests.md
 operators-implementation.md

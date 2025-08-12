@@ -81,40 +81,17 @@ source_suffix = {
     ".rst": "restructuredtext",
 }
 
-# Root document (MyST toctree is in index.md)
+# Use index.md as the single root for site navigation (Furo-compatible)
+# Sphinx ≥ 5 prefers root_doc; keep master_doc for older versions.
 root_doc = "index"
+master_doc = "index"
 
-# Exclude build and archives from the tree
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "archive/**"]
+# Remove html_sidebars overrides — Furo builds a global nav from the root toctree.
+# If you previously set html_sidebars with "globaltoc.html", delete/disable it:
+# html_sidebars = {}  # DO NOT set templates like "globaltoc.html" with Furo
 
-# Templates/static directories (fallback to [] if missing)
-_here = Path(__file__).parent
-_templates = _here / "_templates"
-_static = _here / "_static"
-templates_path = ["_templates"] if _templates.is_dir() else []
-html_static_path = ["_static"] if _static.is_dir() else []
-
-# -- MyST configuration
-myst_enable_extensions = [
-    "deflist",
-    "substitution",
-    "attrs",
-    "tasklist",
-]
-myst_heading_anchors = 3  # create anchors for H1–H3
-
-# -- External links (Open223)
-extlinks = {
-    # Usage: :open223:`Equipment` -> https://explore.open223.info/s223/Equipment
-    "open223": ("https://explore.open223.info/s223/%s", "s223:%s"),
+# Keep theme options minimal and Furo-compatible
+html_theme_options = {
+    "navigation_with_keys": True,  # optional: j/k to move in nav
+    # Furo ignores RTD-style options like collapse_navigation/navigation_depth
 }
-
-# -- Intersphinx (standard lib cross-links)
-# Second tuple element must be None or path to objects.inv (not an empty dict)
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3", None),
-}
-
-# -- HTML output
-html_theme = "furo"
-html_title = "si-builder Documentation"
