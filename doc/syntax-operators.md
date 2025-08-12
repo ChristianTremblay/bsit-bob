@@ -25,7 +25,10 @@ Operators map to 223P relations or modeling conveniences used in si-builder.
   - Adds an aspect to a node or property; for Equipment/Sensor also adds roles (EnumerationKinds)
   - Used widely to attach modeling aspects without verbose calls
 
- on the given connectable (CP, equipment, or space)
+- sensor % connectable → add observation location
+- Adds an s223:hasObservationLocation from the Sensor to the target connectable (ConnectionPoint or BoundaryConnectionPoint)
+- Typical form: Sensor % ConnectionPoint
+- Links: https://explore.open223.info/s223/hasObservationLocation, https://explore.open223.info/s223/ConnectionPoint, https://explore.open223.info/s223/BoundaryConnectionPoint
 
 Examples
 
