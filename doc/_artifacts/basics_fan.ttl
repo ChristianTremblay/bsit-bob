@@ -17,38 +17,38 @@
   rdfs:label "fan_device" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-_:N0306c86137394734b0faa61e54d291ab a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:ElectricalConnectionPoint ;
-    rdfs:label "SF-1.electricalInlet" ;
-    s223:hasMedium s223:Constituent-Electricity ;
-    s223:isConnectionPointOf _:N3765057a9b46483e95ac6d34cfec6f06 .
-
-_:N15997cf694474057a336c75ffe58f390 a s223:ConnectionPoint,
+_:N0a03fa8eb885484a92b0a9ff09351c9b a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF-1.airOutlet" ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf _:N3765057a9b46483e95ac6d34cfec6f06 ;
-    s223:pairedConnectionPoint _:Nef70625174a443cab395e3faa4f33e92 .
+    s223:isConnectionPointOf _:N8418e694cefc4c64aaef2868b9edc17e ;
+    s223:pairedConnectionPoint _:N87c3abb8640d495089a00846350ef26b .
 
-_:N3765057a9b46483e95ac6d34cfec6f06 a s223:Connectable,
+_:N2d648f0b85994ce98e5043095746baec a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:ElectricalConnectionPoint ;
+    rdfs:label "SF-1.electricalInlet" ;
+    s223:hasMedium s223:Constituent-Electricity ;
+    s223:isConnectionPointOf _:N8418e694cefc4c64aaef2868b9edc17e .
+
+_:N8418e694cefc4c64aaef2868b9edc17e a s223:Connectable,
         s223:DynamicFan,
         s223:Equipment,
         s223:Fan ;
     rdfs:label "SF-1" ;
-    s223:hasConnectionPoint _:N0306c86137394734b0faa61e54d291ab,
-        _:N15997cf694474057a336c75ffe58f390,
-        _:Nef70625174a443cab395e3faa4f33e92 ;
-    bob:airInlet _:Nef70625174a443cab395e3faa4f33e92 ;
-    bob:airOutlet _:N15997cf694474057a336c75ffe58f390 ;
+    s223:hasConnectionPoint _:N0a03fa8eb885484a92b0a9ff09351c9b,
+        _:N2d648f0b85994ce98e5043095746baec,
+        _:N87c3abb8640d495089a00846350ef26b ;
+    bob:airInlet _:N87c3abb8640d495089a00846350ef26b ;
+    bob:airOutlet _:N0a03fa8eb885484a92b0a9ff09351c9b ;
     rdfs:comment "A really basic Fan" .
 
-_:Nef70625174a443cab395e3faa4f33e92 a s223:ConnectionPoint,
+_:N87c3abb8640d495089a00846350ef26b a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF-1.airInlet" ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf _:N3765057a9b46483e95ac6d34cfec6f06 ;
-    s223:pairedConnectionPoint _:N15997cf694474057a336c75ffe58f390 .
+    s223:isConnectionPointOf _:N8418e694cefc4c64aaef2868b9edc17e ;
+    s223:pairedConnectionPoint _:N0a03fa8eb885484a92b0a9ff09351c9b .
 

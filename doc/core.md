@@ -72,18 +72,12 @@ dump(data_graph, filename="build/model.ttl")
 dump(schema_graph, filename="build/schema.ttl")
 ```
 
-Minimal Python example
-```python
-from bob.core import Equipment, Property, dump, data_graph
-
-# Define a tiny equipment with a property
-fan = Equipment(label="SF-1")
-fanSpeed = Property(label="SF-1.Speed")
-fan.add_property(fanSpeed)
-
-# Serialize
-dump(data_graph, filename="sf1.ttl")
+Minimal Python example (runnable)
+```{literalinclude} examples/core_minimal.py
+:language: python
 ```
+
+![Rendered graph](_static/artifacts/core_minimal.svg)
 
 Notes
 - Connection operators (>>, <<) dispatch to connect_mm multimethods that validate CP direction and medium compatibility.
