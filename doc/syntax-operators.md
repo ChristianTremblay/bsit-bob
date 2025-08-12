@@ -5,30 +5,29 @@ Operators map to 223P relations or modeling conveniences used in si-builder.
 - `A > B`  → containment
   - Equipment/PhysicalSpace: s223:contains
   - System/Zone: s223:hasMember
-  - Links: https://explore.open223.info/s223/contains, https://explore.open223.info/s223/hasMember
+  - Links: [s223:contains](https://explore.open223.info/s223/contains), [s223:hasMember](https://explore.open223.info/s223/hasMember)
 
 - `A >> B` and `B << A` → connectivity between connection points (CPs)
-  - Creates an s223:Connection, binds via s223:connectsAt / s223:connectsThrough and carries s223:hasMedium
+  - Creates an s223:Connection, binds via s223:connectsAt / s223:connectsThrough and can carry s223:hasMedium
   - Prefer `cp_out >> cp_in`; `cp_in << cp_out` is equivalent
-  - Links: https://explore.open223.info/s223/Connection, https://explore.open223.info/s223/ConnectionPoint, https://explore.open223.info/s223/hasMedium
+  - Links: [s223:Connection](https://explore.open223.info/s223/Connection), [s223:ConnectionPoint](https://explore.open223.info/s223/ConnectionPoint), [s223:connectsAt](https://explore.open223.info/s223/connectsAt), [s223:connectsThrough](https://explore.open223.info/s223/connectsThrough), [s223:hasMedium](https://explore.open223.info/s223/hasMedium)
 
 - `X | cp` → boundary connection point exposure on systems
   - Declares a s223:BoundaryConnectionPoint on the System and maps it to an internal CP
   - Typical form: `System | ConnectionPoint`
-  - Link: https://explore.open223.info/s223/BoundaryConnectionPoint
+  - Link: [s223:BoundaryConnectionPoint](https://explore.open223.info/s223/BoundaryConnectionPoint)
 
 - `prop @ external_ref` → external reference on a property
   - Adds an s223:ExternalReference to a Property/Setpoint/Observable/Actuatable
-  - Link: https://explore.open223.info/s223/ExternalReference
+  - Link: [s223:ExternalReference](https://explore.open223.info/s223/ExternalReference)
 
 - `node_or_prop += aspect_or_role` → add aspect/role metadata
   - Adds an aspect to a node or property; for Equipment/Sensor also adds roles (EnumerationKinds)
   - Used widely to attach modeling aspects without verbose calls
 
-- `sensor % connectable` → add observation location
-  - Adds an s223:hasObservationLocation from the Sensor to the target connectable (ConnectionPoint or BoundaryConnectionPoint)
-  - Typical form: `Sensor % ConnectionPoint`
-  - Links: https://explore.open223.info/s223/hasObservationLocation, https://explore.open223.info/s223/ConnectionPoint, https://explore.open223.info/s223/BoundaryConnectionPoint
+- `sensor % target` → observation relation
+  - Adds s223:observes from the Sensor to the target (connectable or Property)
+  - Links: [s223:observes](https://explore.open223.info/s223/observes), [s223:ConnectionPoint](https://explore.open223.info/s223/ConnectionPoint), [s223:BoundaryConnectionPoint](https://explore.open223.info/s223/BoundaryConnectionPoint)
 
 Examples
 
@@ -52,8 +51,8 @@ SupplyTempSensor.temperature @ some_external_reference
 SF.fanSpeed += aspect                     # add an aspect to a property
 AHU += role                               # add a role (EnumerationKind) to equipment
 
-# Observation Location
-Sensor % SA_Duct.airOutlet
+# Observation
+Sensor % AHU.supplyAirTemperature
 ```
 
 Notes
@@ -63,5 +62,6 @@ Notes
   - `|` via `__or__`/`__ror__` on System and related metaclasses
   - `@` via `__matmul__` on Property/Setpoint types (for external references)
   - `+=` via `__iadd__` on Node/Property/Equipment/Sensor to add aspects or roles
-  - `%` via `__mod__` on Sensor pointing connectable to add observation location
+  - `%` via `__mod__` on Sensor to add s223:observes
+- If rendering issues persist in HTML, use code formatting (as above) or escape `>` as `&gt;`
 
