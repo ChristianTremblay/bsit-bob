@@ -26,9 +26,9 @@ Operators map to 223P relations or modeling conveniences used in si-builder.
   - Used widely to attach modeling aspects without verbose calls
 
 - sensor % connectable → add observation location
-- Adds an s223:hasObservationLocation from the Sensor to the target connectable (ConnectionPoint or BoundaryConnectionPoint)
-- Typical form: Sensor % ConnectionPoint
-- Links: https://explore.open223.info/s223/hasObservationLocation, https://explore.open223.info/s223/ConnectionPoint, https://explore.open223.info/s223/BoundaryConnectionPoint
+  - Adds an s223:hasObservationLocation from the Sensor to the target connectable (ConnectionPoint or BoundaryConnectionPoint)
+  - Typical form: Sensor % ConnectionPoint
+  - Links: https://explore.open223.info/s223/hasObservationLocation, https://explore.open223.info/s223/ConnectionPoint, https://explore.open223.info/s223/BoundaryConnectionPoint
 
 Examples
 
