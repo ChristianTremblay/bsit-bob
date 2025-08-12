@@ -37,15 +37,13 @@ This runs helpers, executes examples to generate TTL, renders SVG graphs, and bu
 Prerequisites (one-time)
 - Windows (PowerShell)
 ```powershell
-python -m pip install -U sphinx myst-parser rdflib graphviz python-dotenv
-choco install graphviz   # ensure dot.exe is on PATH
+python -m pip install -U sphinx myst-parser rdflib graphviz python-dotenv sphinxawesome-theme
+choco install graphviz
 ```
 - Linux (bash)
 ```bash
-python3 -m pip install -U sphinx myst-parser rdflib graphviz python-dotenv
-# Install Graphviz system package (required for dot -> SVG)
-# Debian/Ubuntu:
-sudo apt-get update && sudo apt-get install -y graphviz
+python3 -m pip install -U sphinx myst-parser rdflib graphviz python-dotenv sphinxawesome-theme
+sudo apt-get update && sudo apt-get install -y graphviz  # Debian/Ubuntu
 # Fedora:
 sudo dnf install -y graphviz
 # Arch:

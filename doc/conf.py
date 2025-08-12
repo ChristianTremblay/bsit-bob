@@ -81,19 +81,20 @@ source_suffix = {
     ".rst": "restructuredtext",
 }
 
-# Use index.md as the single root for site navigation (Furo-compatible)
-# Sphinx ≥ 5 prefers root_doc; keep master_doc for older versions.
+# Use Awesome Theme
+html_theme = "sphinxawesome_theme"
+
+# Root document drives the global ToC
 root_doc = "index"
 master_doc = "index"
 
-# Remove html_sidebars overrides — Furo builds a global nav from the root toctree.
-# If you previously set html_sidebars with "globaltoc.html", delete/disable it:
-# html_sidebars = {}  # DO NOT set templates like "globaltoc.html" with Furo
+# Furo-specific sidebars are not used with Awesome Theme
+# html_sidebars = {}  # keep unset
 
-# Keep theme options minimal and Furo-compatible
+# Optional theme options
 html_theme_options = {
-    "navigation_with_keys": True,  # optional: j/k to move in nav
-    # Furo ignores RTD-style options like collapse_navigation/navigation_depth
+    "show_scrolltop": True,
+    "awesome_external_links": True,
 }
 
 # Exclude folders from Sphinx source build
