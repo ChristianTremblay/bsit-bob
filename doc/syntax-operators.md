@@ -25,6 +25,8 @@ Operators map to 223P relations or modeling conveniences used in si-builder.
   - Adds an aspect to a node or property; for Equipment/Sensor also adds roles (EnumerationKinds)
   - Used widely to attach modeling aspects without verbose calls
 
+ on the given connectable (CP, equipment, or space)
+
 Examples
 
 ```python
@@ -46,6 +48,9 @@ SupplyTempSensor.temperature @ some_external_reference
 # Aspects and roles
 SF.fanSpeed += aspect                     # add an aspect to a property
 AHU += role                               # add a role (EnumerationKind) to equipment
+
+# Observation Location
+Sensor % SA_Duct.airOutlet
 ```
 
 Notes
@@ -55,4 +60,5 @@ Notes
   - | via __or__/__ror__ on System and related metaclasses
   - @ via __matmul__ on Property/Setpoint types (for external references)
   - += via __iadd__ on Node/Property/Equipment/Sensor to add aspects or roles
+  - % via __mod__ on Sensor pointing connectable to add observation location
 - See Operators (Implementation Map) for the complete class-to-operator inventory:

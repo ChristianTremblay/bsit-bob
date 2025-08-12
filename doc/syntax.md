@@ -32,6 +32,7 @@ YAML uses a single operator "->" for all directional relations to keep templates
 
 - sensors_observation_location
   - Sensor observes target: Sensor -> Target.
+  - Equivalent Python shorthand: sensor % target
   - Target can be a Connectable or a specific Property.
   - Example:
     ```yaml
@@ -57,7 +58,7 @@ YAML uses a single operator "->" for all directional relations to keep templates
 
 Notes
 - In YAML, containment/membership is implied by structure (equipment listed under a System), not by an operator.
-- Python code may still use overloaded operators (>>, <<, |, @, +=). YAML intentionally standardizes on "->".
+- Python code may still use overloaded operators (>>, <<, |, @, +=, %) for brevity. YAML intentionally standardizes on "->".
 - Always prefer explicit CP names (e.g., airOutlet/airInlet). If omitted, resolution is template-specific and may error.
 
 Abridged template (System)

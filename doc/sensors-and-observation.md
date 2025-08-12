@@ -25,3 +25,23 @@ Notes
 - For differential readings, first mapping is observation; second is reference; set qudt:isDeltaQuantity true where applicable (per 223P core.ttl).
 - Units and quantity kind follow QUDT (qudt:hasUnit, qudt:hasQuantityKind).
 
+# Observation location operator (%)
+
+- Python shorthand: `sensor % target` adds `s223:observes` from the sensor to the target.
+- YAML uses a single arrow in the `sensors_observation_location` section; the template parser maps it to `%` in Python.
+
+Example (YAML)
+```yaml
+sensors_observation_location:
+  - SAT_Sensor -> AHU.supplyAirTemperature
+```
+
+Equivalent (Python)
+```python
+SAT_Sensor % AHU.supplyAirTemperature
+```
+
+Notes
+- Target can be a connectable node or a specific Property.
+- The SVG renderer includes observes edges; TTL shows the full triple.
+
