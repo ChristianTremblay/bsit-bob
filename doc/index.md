@@ -17,6 +17,12 @@ sensors-and-observation.md
 controllers-and-bacnet.md
 references.md
 systems-vs-equipment.md
+equipment.md
+sensors.md
+spaces.md
+properties.md
+externalreferences.md
+connections.md
 validation-and-export.md
 examples-from-tests.md
 operators-implementation.md
