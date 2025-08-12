@@ -95,3 +95,12 @@ html_theme_options = {
     "navigation_with_keys": True,  # optional: j/k to move in nav
     # Furo ignores RTD-style options like collapse_navigation/navigation_depth
 }
+
+# Exclude folders from Sphinx source build
+exclude_patterns = [
+    "archive/**",
+    "_build/**",
+    "_artifacts/**",
+    # add more if needed:
+    # "examples/**",
+]

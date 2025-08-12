@@ -1,22 +1,88 @@
-# si-builder
+# SI-Builder
 
-This Python package makes it easier to build SI-WG models.
+Build ASHRAE 223P–compliant models using YAML and Python. si-builder emits RDF (Turtle) and aligns key concepts with RealEstateCore.
 
-Build Samples by running
+Install
+```bash
+git clone https://bas-im.emcs.cornell.edu/223/si-builder.git
+cd si-builder
+pip install .
+```
 
+Verify import
 ```python
-pytest -v .\validate_cicd\test_create_samples.py
+# ipython
+import bob  # si-builder package
 ```
 
-Validate by running
+Environment
+- Install python-dotenv (recommended). si-builder automatically loads a .env at the project root if present.
+- See doc/environment.md for available variables and effects.
 
-```python
-pytest -s -vvvv -n auto validate_cicd/test_validation.py
+Run tests
+- Windows (PowerShell)
+```powershell
+cd d:\0Programmes\Ashrae\si-builder
+pytest .\tests\
+```
+- Linux (bash)
+```bash
+cd /path/to/si-builder
+pytest tests/
 ```
 
-# Querying sample models
-Using `query_model` you can execute queries found in the sparql folder of sample and generate the result html files
+Build documentation (HTML)
+This runs helpers, executes examples to generate TTL, renders SVG graphs, and builds Sphinx.
 
+Prerequisites (one-time)
+- Windows (PowerShell)
+```powershell
+python -m pip install -U sphinx myst-parser rdflib graphviz python-dotenv
+choco install graphviz   # ensure dot.exe is on PATH
 ```
-query_model path_to_ttl_file path_to_sparql_queries
+- Linux (bash)
+```bash
+python3 -m pip install -U sphinx myst-parser rdflib graphviz python-dotenv
+# Install Graphviz system package (required for dot -> SVG)
+# Debian/Ubuntu:
+sudo apt-get update && sudo apt-get install -y graphviz
+# Fedora:
+sudo dnf install -y graphviz
+# Arch:
+sudo pacman -S graphviz
 ```
+
+Build and open
+- Windows (PowerShell)
+```powershell
+python .\tools\build_docs.py
+Start-Process .\doc\_build\html\index.html
+```
+- Linux (bash)
+```bash
+python3 ./tools/build_docs.py
+xdg-open ./doc/_build/html/index.html
+```
+
+Docs contents (from doc/index.md)
+- Getting Started
+- Environment
+- Core
+- Enumerations
+- Basics
+- Syntax Operators
+- Syntax
+- Connections
+- Junctions and Boundaries
+- Sensors and Observation
+- Controllers and BACnet
+- References
+- Systems vs Equipment
+- Equipment
+- Spaces
+- Properties
+- External References
+- Templates and Catalog
+- Validation and Export
+- Examples from Tests
+- Operators Implementation

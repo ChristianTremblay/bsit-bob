@@ -22,17 +22,6 @@ Legend: Signature shows __init__ (minus self). s223 term is derived from _class_
 - Summary: This will be subclassed by different specific datasources.
 - s223 term: `InfluxdbReference` (<https://explore.open223.info/s223/InfluxdbReference>)
 
-## bob.externalreference.niagara
-### NiagaraHistoryReference
-- Signature: `NiagaraHistoryReference(arg: 'Any' = None, **kwargs: 'Any')`
-- Summary: This will be subclassed by different specific datasources.
-- s223 term: (not declared)
-
-### NiagaraORDReference
-- Signature: `NiagaraORDReference(arg: 'Any' = None, **kwargs: 'Any')`
-- Summary: This will be subclassed by different specific datasources.
-- s223 term: (not declared)
-
 ## bob.externalreference.timeseries
 ### TimeSeriesReference
 - Signature: `TimeSeriesReference(arg: 'Any' = None, **kwargs: 'Any')`

@@ -4,7 +4,7 @@ Install
 ```bash
 git clone https://bas-im.emcs.cornell.edu/223/si-builder.git
 cd si-builder
-pip install . python-dotenv
+pip install .
 ```
 
 Verify import
@@ -13,28 +13,14 @@ Verify import
 import bob  # si-builder package
 ```
 
-Load .env (recommended)
-```python
-from dotenv import load_dotenv
-load_dotenv()  # reads ./.env for environment configuration
-```
-
-Minimal YAML (single Equipment)
-```yaml
-# file: hello-equipment.yaml
-name: hello_equipment
-template_class: Equipment
-params:
-  label: "Hello Device"
-cp:
-  airInlet: AirInletConnectionPoint
-  airOutlet: AirOutletConnectionPoint
-```
+Environment configuration
+- We suggest you install python-dotenv. si-builder automatically loads a .env file in your project root if present.
+- See Environment (environment.md) for available variables and their effects.
 
 Load/validate via tests runner (recommended while authoring)
 ```bash
 cd d:\0Programmes\Ashrae\si-builder
-pytest -q -k create_from_yaml
+pytest .\tests\
 ```
 
 Next steps

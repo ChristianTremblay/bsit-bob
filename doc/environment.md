@@ -18,17 +18,14 @@ Example .env
 ```properties
 # Directory in which you cloned 223Standard
 S223_DIRECTORY="D:\0Programmes\Ashrae\223standard"
-S223_FOLDER="D:\0Programmes\Ashrae\223standard\Standard_223"
+S223_FOLDER="path_to\223standard\"
 
 # SHACL validation tool home (TopBraid Shacl)
-SHACL_HOME="D:\0Programmes\Ashrae\si-builder\topbraid-validate\shacl-1.4.2"
-
-# Samples location
-BOB_SAMPLES="D:\0Programmes\Ashrae\si-builder\samples"
+SHACL_HOME=""path_to\si-builder\topbraid-validate\shacl-1.4.2"
 
 # Logging
 BOB_LOG="WARNING"
-BOB_LOG_FILENAME="D:\0Programmes\Ashrae\si-builder\log.txt"
+BOB_LOG_FILENAME="path_to\si-builder\log.txt"
 
 # Example namespace
 BOB_EX="http://example/"

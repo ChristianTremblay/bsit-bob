@@ -1,6 +1,6 @@
 # SI-Builder Documentation
 
-Build ASHRAE 223P-compliant models using YAML and Python. This documentation focuses on the core si-builder concepts, syntax, and workflows, with minimal runnable examples derived from the tests.
+Build ASHRAE 223P-compliant models using YAML and Python. This documentation focuses on the core si-builder concepts, syntax, and workflows, with runnable examples derived from the tests.
 
 ```{toctree}
 :maxdepth: 2
@@ -23,7 +23,6 @@ equipment.md
 spaces.md
 properties.md
 externalreferences.md
-connections.md
 templates-and-catalog.md
 validation-and-export.md
 examples-from-tests.md
