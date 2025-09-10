@@ -10,16 +10,20 @@ from bob.template import EquipmentFromTemplate, config_from_yaml
 
 model_name = Path(__file__).stem
 
+def example_code():
+    # YAML (co-located with this script)
+    yaml_path = Path(__file__).with_name("fan_device.yaml")
+    cfg = config_from_yaml(str(yaml_path))
+    node = EquipmentFromTemplate(config=cfg, label="SF-1") #noqa F841
 
+
+# Main function to parse arguments and run the example
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, required=True, help="Output TTL path")
     args = ap.parse_args()
-
-    # YAML (co-located with this script)
-    yaml_path = Path(__file__).with_name("fan_device.yaml")
-    cfg = config_from_yaml(str(yaml_path))
-    node = EquipmentFromTemplate(config=cfg, label="SF-1")
+    
+    example_code()
 
     ttl_path = args.out
     dump(
@@ -27,9 +31,7 @@ def main():
         filename=f"{ttl_path}",
         header=ttl_test_header(model_name),
     )
-    g = data_graph
     print(f"[example] wrote {ttl_path}")
-
 
 if __name__ == "__main__":
     main()

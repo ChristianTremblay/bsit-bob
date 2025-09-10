@@ -8,17 +8,22 @@ from bob.template import SystemFromTemplate, config_from_yaml
 
 model_name = Path(__file__).stem
 
+def example_code():
+    yaml_path = Path(__file__).with_name("ahu_system.yaml")
+    cfg = config_from_yaml(str(yaml_path))
 
+    # Build the model from YAML (same pattern as fan_device.py)
+    node = SystemFromTemplate(config=cfg, label="AHU-1") #noqa F841
+
+
+
+# Main function to parse arguments and run the example
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, required=True, help="Output TTL path")
     args = ap.parse_args()
 
-    yaml_path = Path(__file__).with_name("ahu_system.yaml")
-    cfg = config_from_yaml(str(yaml_path))
-
-    # Build the model from YAML (same pattern as fan_device.py)
-    node = SystemFromTemplate(config=cfg, label="AHU-1")
+    example_code()
 
     dump(
         data_graph,

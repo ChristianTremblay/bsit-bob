@@ -15,35 +15,62 @@ This section mirrors the simplest patterns covered by tests and builds up progre
 
 ## Equipment (single device)
 
+### Using python directly
+
+Python Code to define a Fan
+```{literalinclude} examples/fan_device_from_class.py
+:language: python
+:caption: Example: fan_device_from_class.py
+```
+
+```{literalinclude} _artifacts/basics_fan_from_class.ttl
+:language: turtle
+:caption: Listing: basics_fan_from_class.ttl
+```
+
+```{figure} _static/artifacts/basics_fan_from_class.svg
+:alt: Fan example graph when created from class
+:align: center
+
+Figure: basics_fan_from_class graph
+```
+
+### Using Templates
+
+#### Fan Template
 YAML template
 ```{literalinclude} examples/fan_device.yaml
 :language: yaml
 :caption: Example: fan_device.yaml
 ```
 
-Equivalent Python
-```{literalinclude} examples/fan_device.py
+#### Python code for Fan
+Python Code to use YAML template
+```{literalinclude} examples/fan_device_from_yaml.py
 :language: python
-:caption: Example: fan_device.py
+:caption: Example: fan_device_from_yaml.py
 ```
 
-```{figure} _static/artifacts/basics_fan.svg
-:alt: Fan example graph
+#### Fan Resulting TTL File
+```{literalinclude} _artifacts/basics_fan_from_yaml.ttl
+:language: turtle
+:caption: Listing: basics_fan_from_yaml.ttl
+```
+
+#### Fan Graph picture
+```{figure} _static/artifacts/basics_fan_from_yaml.svg
+:alt: Fan example graph using YAML template
 :align: center
 
-Figure: basics_fan graph
+Figure: basics_fan_from_yaml graph
 ```
 
+#### Legends
 ```{admonition} Legend (SVG)
 - Boxes: Equipment, Systems, Spaces, and other nodes
 - Circles: s223:Property
 - Diamonds: s223:ConnectionPoint
 - Edge labels: s223 predicates (contains, hasMember, hasProperty, connectsAt, mapsTo, …)
-```
-
-```{literalinclude} _artifacts/basics_fan.ttl
-:language: turtle
-:caption: Listing: basics_fan.ttl
 ```
 
 ```{admonition} Legend (TTL)
@@ -57,35 +84,64 @@ Figure: basics_fan graph
 
 ## System (simple AHU fragment)
 
+### Building a AHU using Python directly
+
+#### Python code to build a AHU
+Python Code to define a AHU
+```{literalinclude} examples/ahu_system_from_class.py
+:language: python
+:caption: Example: ahu_system_from_class.py
+```
+
+#### AHU Resulting TTL File
+```{literalinclude} _artifacts/basics_ahu_from_class.ttl
+:language: turtle
+:caption: Listing: basics_ahu_from_class.ttl
+```
+
+#### AHU from clases Graph picture
+```{figure} _static/artifacts/basics_ahu_from_class.svg
+:alt: AHU example graph from classes
+:align: center
+
+Figure: basics_ahu_from_clases graph
+```
+
+### Building a AHU using Templates
+
+#### AHU Template
 YAML template
 ```{literalinclude} examples/ahu_system.yaml
 :language: yaml
 :caption: Example: ahu_system.yaml
 ```
 
-Equivalent Python
-```{literalinclude} examples/ahu_system.py
+#### Python code to build a AHU from template
+```{literalinclude} examples/ahu_system_from_yaml.py
 :language: python
-:caption: Example: ahu_system.py
+:caption: Example: ahu_system_from_yaml.py
 ```
 
-```{figure} _static/artifacts/basics_ahu.svg
-:alt: AHU example graph
+#### Resulting AHU TTL from Template
+```{literalinclude} _artifacts/basics_ahu_from_yaml.ttl
+:language: turtle
+:caption: Listing: basics_ahu_from_yaml.ttl
+```
+
+#### AHU Graph Picture (from template)
+```{figure} _static/artifacts/basics_ahu_from_yaml.svg
+:alt: AHU example graph from YAML
 :align: center
 
-Figure: basics_ahu graph
+Figure: basics_ahu_from_yaml graph
 ```
 
+#### Legends
 ```{admonition} Legend (SVG)
 - Boxes: Equipment, Systems, Spaces, and other nodes
 - Circles: s223:Property
 - Diamonds: s223:ConnectionPoint
 - Edge labels: s223 predicates (contains, hasMember, hasProperty, connectsAt, mapsTo, …)
-```
-
-```{literalinclude} _artifacts/basics_ahu.ttl
-:language: turtle
-:caption: Listing: basics_ahu.ttl
 ```
 
 ```{admonition} Legend (TTL)
