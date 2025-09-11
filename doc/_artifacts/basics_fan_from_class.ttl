@@ -17,37 +17,37 @@
   rdfs:label "fan_device_from_class" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-_:N771ef76675f247e690f62b1cb31ad5db a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "SF-2.airInlet" ;
-    s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf _:Nf7c1ca133e3d40da9c7a8f3f5d7dbe2d ;
-    s223:pairedConnectionPoint _:N9e548c44d29748ecace44626c2a64b6e .
+_:Nab6b65a149fa430e94ddb2b4908cb6f6 a s223:Connectable,
+        s223:Equipment,
+        s223:Fan ;
+    rdfs:label "SF-2" ;
+    s223:hasConnectionPoint _:Nb4b02245254d403c8558b35e365b71a7,
+        _:Nc636645742694375941f10ab63dda9f6,
+        _:Nedd04a9f940742bcbded83f1a3d2a825 ;
+    bob:airInlet _:Nc636645742694375941f10ab63dda9f6 ;
+    bob:airOutlet _:Nedd04a9f940742bcbded83f1a3d2a825 ;
+    rdfs:comment "Fan created from class" .
 
-_:N7f9329d9154640d9928b23ba87e990c5 a s223:ConnectionPoint,
+_:Nb4b02245254d403c8558b35e365b71a7 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "SF-2.electricalInlet" ;
     s223:hasMedium s223:Constituent-Electricity ;
-    s223:isConnectionPointOf _:Nf7c1ca133e3d40da9c7a8f3f5d7dbe2d .
+    s223:isConnectionPointOf _:Nab6b65a149fa430e94ddb2b4908cb6f6 .
 
-_:N9e548c44d29748ecace44626c2a64b6e a s223:ConnectionPoint,
+_:Nc636645742694375941f10ab63dda9f6 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "SF-2.airInlet" ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf _:Nab6b65a149fa430e94ddb2b4908cb6f6 ;
+    s223:pairedConnectionPoint _:Nedd04a9f940742bcbded83f1a3d2a825 .
+
+_:Nedd04a9f940742bcbded83f1a3d2a825 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF-2.airOutlet" ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf _:Nf7c1ca133e3d40da9c7a8f3f5d7dbe2d ;
-    s223:pairedConnectionPoint _:N771ef76675f247e690f62b1cb31ad5db .
-
-_:Nf7c1ca133e3d40da9c7a8f3f5d7dbe2d a s223:Connectable,
-        s223:Equipment,
-        s223:Fan ;
-    rdfs:label "SF-2" ;
-    s223:hasConnectionPoint _:N771ef76675f247e690f62b1cb31ad5db,
-        _:N7f9329d9154640d9928b23ba87e990c5,
-        _:N9e548c44d29748ecace44626c2a64b6e ;
-    bob:airInlet _:N771ef76675f247e690f62b1cb31ad5db ;
-    bob:airOutlet _:N9e548c44d29748ecace44626c2a64b6e ;
-    rdfs:comment "Fan created from class" .
+    s223:isConnectionPointOf _:Nab6b65a149fa430e94ddb2b4908cb6f6 ;
+    s223:pairedConnectionPoint _:Nc636645742694375941f10ab63dda9f6 .
 
