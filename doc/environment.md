@@ -17,7 +17,6 @@ load_dotenv()  # loads .env from current working directory or parents
 Example .env
 ```properties
 # Directory in which you cloned 223Standard
-S223_DIRECTORY="D:\0Programmes\Ashrae\223standard"
 S223_FOLDER="path_to\223standard\"
 
 # SHACL validation tool home (TopBraid Shacl)
@@ -43,7 +42,6 @@ SHOW_INSPECTION_WARNINGS=False
 ```
 
 Variable reference
-- S223_DIRECTORY: Absolute path to your local 223standard clone. Used by tools and docs that reference ASHRAE 223P resources.
 - S223_FOLDER: Path to the Standard_223 folder within the 223standard repo.
 - SHACL_HOME: Path to your SHACL validation distribution (e.g., TopBraid shacl-1.4.2).
 - BOB_SAMPLES: Folder containing sample inputs/models for si-builder runs.
@@ -59,7 +57,7 @@ Variable reference
 
 Windows tips
 - To set a value for the current session only:
-  - set S223_DIRECTORY=D:\0Programmes\Ashrae\223standard
+  - set S223_FOLDER=D:\0Programmes\Ashrae\223standard
 - To persist for your user:
-  - setx S223_DIRECTORY "D:\0Programmes\Ashrae\223standard"
+  - setx S223_FOLDER "D:\0Programmes\Ashrae\223standard"
 - Prefer .env for project reproducibility.

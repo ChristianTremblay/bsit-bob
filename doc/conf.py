@@ -18,7 +18,7 @@ def _sync_s223_figures():
         figures_dst = Path(__file__).parent / "figures"
         figures_dst.mkdir(parents=True, exist_ok=True)
 
-        s223_folder = os.getenv("S223_FOLDER") or os.getenv("S223_DIRECTORY")
+        s223_folder = os.getenv("S223_FOLDER") or os.getenv("S223_FOLDER")
         roots = [Path(s223_folder)] if s223_folder else []
         guess = repo_root.parent / "223standard"
         roots += [guess, guess / "Standard_223"]

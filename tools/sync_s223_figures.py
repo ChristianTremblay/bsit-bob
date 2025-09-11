@@ -51,7 +51,7 @@ def main():
     ap.add_argument(
         "--load-dotenv",
         action="store_true",
-        help="Load .env to resolve S223_FOLDER / S223_DIRECTORY",
+        help="Load .env to resolve S223_FOLDER / S223_FOLDER",
     )
     args = ap.parse_args()
 
@@ -69,7 +69,7 @@ def main():
     dest.mkdir(parents=True, exist_ok=True)
 
     s223_folder = args.s223_folder or os.getenv("S223_FOLDER")
-    s223_dir = args.s223_dir or os.getenv("S223_DIRECTORY")
+    s223_dir = args.s223_dir or os.getenv("S223_FOLDER")
 
     roots = []
     if s223_folder:
@@ -83,7 +83,7 @@ def main():
     figures = find_figures(roots)
     if not figures:
         print(
-            "[s223] No publication figures found. Check S223_FOLDER/S223_DIRECTORY in .env."
+            "[s223] No publication figures found. Check S223_FOLDER/S223_FOLDER in .env."
         )
         return
 
