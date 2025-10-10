@@ -20,19 +20,10 @@ cache:
 
 before_script:
   - python3 -V # Print out python version for debugging
-  - pip install virtualenv
-  - python3 -m venv test_venv
-  - source test_venv/bin/activate
-  - pip install .
-  - pip install pytest
-  - pip install pyshacl
-  - pip install ontoenv
-  - pip install rdflib
-  - pip install pyvis
-  - pip install pyyaml
-  - pip install click
-  - pip install python-dotenv
-
+  - pip install uv 
+  - uv venv
+  - .venv\Scripts\activate 
+  - uv pip install .[templates] .[validation]
 
 test_python:
   script:
