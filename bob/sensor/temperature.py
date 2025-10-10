@@ -39,18 +39,16 @@ class TemperatureSensor(Sensor):
             raise ValueError(
                 "You must provide ofMedium when defining a temperature sensor"
             )
-
-        super().__init__(config=config, **_sensor_kwargs)
-
+        
         observed_prop = Temperature(
             # isObservedBy=self,
             label="observed_property",
             **_property_kwargs,
         )
-        self.add_property(observed_prop)
-        self["observed_property"] = observed_prop
-        self.observes = observed_prop
-        
+
+        _sensor_kwargs["observed_property"] = observed_prop
+
+        super().__init__(config=config, **_sensor_kwargs)        
 
 
 class AirTemperatureSensor(TemperatureSensor):
@@ -59,5 +57,5 @@ class AirTemperatureSensor(TemperatureSensor):
 
 
 class WaterTemperatureSensor(TemperatureSensor):
-    def __init__(self, **kwargs):
-        super().__init__(ofMedium=Water, **kwargs)
+    def __init__(self, config: Dict[str, Any] = {}, **kwargs):
+        super().__init__(config=config,ofMedium=Water, **kwargs)

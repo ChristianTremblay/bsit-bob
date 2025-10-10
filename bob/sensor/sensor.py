@@ -83,7 +83,12 @@ class Sensor(_Sensor):
 
     def __init__(self, config: Dict[str, Any] = {}, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
+        _observed_prop = _sensor_kwargs.pop("observed_property", None)
         super().__init__(config=config, **_sensor_kwargs)
+        if _observed_prop:
+            self.observes = _observed_prop
+            self.add_property(_observed_prop)
+            self["observed_property"] = _observed_prop
 
     @property
     def observedProperty(self):
