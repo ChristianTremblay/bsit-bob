@@ -16,16 +16,7 @@ dependencies = [
 [project.optional-dependencies]
 templates = ["python-dotenv", "pyyaml>=5.4.1"]
 validation = ["pyvis>=0.3.2","click>=8.1.8","python-dotenv"]
-
-[tool.setuptools.packages.find]
-include = ["bob*"]
-namespaces = false
-
-[tool.pytest.ini_options]
-asyncio_default_fixture_loop_scope = "session"
-
-[tool.uv]
-dev-dependencies = [
+tests = [
     "black>=25.1.0",
     "flake8>=7.1.2",
     "mypy>=1.17.1",
@@ -33,3 +24,10 @@ dev-dependencies = [
     "pytest-cov>=6.0.0",
     "pytest>=4.6.11",
 ]
+
+[tool.setuptools.packages.find]
+include = ["bob*"]
+namespaces = false
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "session"
