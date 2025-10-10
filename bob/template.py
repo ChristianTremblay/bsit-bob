@@ -8,11 +8,11 @@ from pathlib import Path
 import yaml
 
 from .core import (
-    BoundaryConnectionPoint,
     Connection,
     ConnectionPoint,
     Equipment,
     System,
+    BOB
 )
 from .introspection import get_class_from_name
 
@@ -41,7 +41,7 @@ def print_console(msg, style=None, panel=False):
         print(msg)
 
 
-def template_update(base: t.Dict = {}, config: t.Dict = None, bases: t.List = None):
+def template_update(base: t.Dict = {}, config: t.Optional[t.Dict] = None, bases: t.Optional[t.List] = None):
     """
     This utility allows to preserve module templates from
     undesired modification during creation of Equipment.
@@ -112,7 +112,7 @@ def get_instance(container: t.Union[Equipment, System], blob: str):
         return (thing, _key)  # in case thing is None
 
 
-def configure_boundaries(container: System, boundaries: t.List[t.Tuple[str, str]]):
+def configure_boundaries(container: System, boundaries: t.List[str]):
     if len(boundaries) > 0:
         print_console("[green]Configuring boundaries[/green]")
     for _target in boundaries:
@@ -210,10 +210,14 @@ def configure_relations(
             source.hasInput(target)
         elif operator == "hasOutput":
             source.hasOutput(target)
+        elif operator == "hasProperty":
+            source.add_property(target)
+        elif operator == "observes":
+            source.observes = target
 
 
 class SystemFromTemplate(System):
-    def __init__(self, config: t.Dict = None, **kwargs):
+    def __init__(self, config: t.Dict = {}, **kwargs):
         _label = kwargs.get("label", config.get("params", {}).get("label"))
         print_console(
             f"[bold blue]Creating System {_label}[/bold blue]",
@@ -236,30 +240,31 @@ class SystemFromTemplate(System):
             if System not in required_class
             else tuple(required_class)
         )
+        _classname = f"Dynamic{'_'.join(cls.__name__ for cls in required_class)}"
         DynamicClass = type(
-            f"Dynamic{'_'.join(cls.__name__ for cls in required_class)}",
+            _classname,
             _tuple,
-            {},
+            {"_class_iri": BOB.DynamicSystem},
         )
         self.__class__ = DynamicClass
 
         print_console(
             f"Instanciating as {[klass.__name__ for klass in required_class]}"
         )
-        DynamicClass.__init__(self, _config, **kwargs)
-        print_console(f"[green]✔ System created.[/green]")
+        DynamicClass.__init__(self, _config, **kwargs)  # type: ignore
+        print_console("[green]✔ System created.[/green]")
         configure_relations(self, _relations)
         configure_boundaries(self, _boundaries)
 
 
 class EquipmentFromTemplate(Equipment):
-    def __init__(self, config: t.Dict = None, **kwargs):
+    def __init__(self, config: t.Dict = {}, **kwargs):
         print_console(
             f"[bold blue]Creating Equipment {config['params']['label']}[/bold blue]",
             panel=True,
             style="bold blue",
         )
-        required_class = (
+        required_class: t.Iterable[t.Any] = (
             config.pop("template_class") if "template_class" in config else Equipment
         )
         _config = template_update(config)
@@ -272,22 +277,23 @@ class EquipmentFromTemplate(Equipment):
             if Equipment not in required_class
             else tuple(required_class)
         )
+        _classname = f"Dynamic{'_'.join(cls.__name__ for cls in required_class)}"
         DynamicClass = type(
-            f"Dynamic{'_'.join(cls.__name__ for cls in required_class)}",
+            _classname,
             _tuple,
-            {},
+            {"_class_iri": BOB.DynamicEquipment},
         )
         self.__class__ = DynamicClass
         print_console(
             f"Instanciating as {[klass.__name__ for klass in required_class]}"
         )
-        DynamicClass.__init__(self, _config, **kwargs)
-        print_console(f"[green]✔ Equipment created.[/green]")
+        DynamicClass.__init__(self, _config, **kwargs)  # type: ignore
+        print_console("[green]✔ Equipment created.[/green]")
         configure_relations(self, _relations)
 
 
-def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
-    if yaml_file is None:
+def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = ""):
+    if yaml_file == "":
         raise FileNotFoundError("No YAML file provided")
     else:
         if isinstance(yaml_file, dict):
@@ -331,7 +337,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     junctions = yaml_content.get("junctions", {})
     connection_points = yaml_content.get("cp", {})
     bacnet = yaml_content.get("bacnet", {})
-    influxdb = yaml_content.get("influxdb", {})
+    influxdb = yaml_content.get("influxdb", {}) #noqa F841 Future use
 
     # boundaries = yaml_content.get("boundaries", None)
 
@@ -440,6 +446,9 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                     raise FileNotFoundError(
                         f"Template {entity_name} not found in catalog {catalog_module}"
                     )
+                elif Path(_template).is_file():
+                    with open(Path(_template)) as _template_file:
+                        template = yaml.safe_load(_template_file)
                 else:
                     template = _template
 
@@ -541,6 +550,12 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
         if re.match(r".*_references$", key) and isinstance(value, list):
             for _connection in value:
                 add_to_relation_dict(_connection, "@", separator=" -> ")
+        if re.match(r".*_hasProperty$", key) and isinstance(value, list):
+            for _connection in value:
+                add_to_relation_dict(_connection, "hasProperty", separator=" -> ")
+        if re.match(r".*_observes$", key) and isinstance(value, list):
+            for _connection in value:
+                add_to_relation_dict(_connection, "observes", separator=" -> ")
 
     # observation location
     observation_location = yaml_content.get("sensors_observation_location", [])
