@@ -12,7 +12,7 @@ Links point to explore.open223.info for the canonical term page.
 `Equipment` is the modeling construct used to represent a thing designed to accomplish a specific task, or a complex thing
 that contains component pieces of `Equipment` that are connected to each other and work together to accomplish a task. `Equipment` can have
 `Connection`s and `ConnectionPoint`s through which one or more kinds of medium (see {s223:Substance-Medium}) might flow. Examples of possible `Equipment` include a `Pump`,
-`Fan`, `HeatExchanger`, `Luminaire`, and `Sensor`, as well as more complex things like a heat pump, a chilled water plant, or a utility meter.
+`Fan`, `AirHeatExchanger`, `Luminaire`, and `Sensor`, as well as more complex things like a heat pump, a chilled water plant, or a utility meter.
 `Equipment` is distinct from a `System`, which is simply a logical grouping or collection of (only) `Equipment`.
 
 In common usage, terms like equipment and system have a variety of ambiguous and possibly conflicting interpretations. A semantic model is
@@ -54,13 +54,13 @@ A logical grouping of one or more `DomainSpace`s for a specific domain for some 
 ### Connection (s223:Connection)
 [Open223 term](https://explore.open223.info/s223/Connection)
 
-A `Connection` is the modeling construct used to represent the thing (e.g., pipe, duct, conductor, or free space) that is used to convey 
-some Medium (e.g., water, air, electricity, light, wi-fi) between two connectable things. All connections have two or more connection points bound 
-to either `Equipment` (see {s223:Equipment}), `DomainSpace` (see {s223:DomainSpace}), or `Junction` (see {s223:Junction}) See Figure 6-2. If the direction 
-of flow is constrained, that constraint is indicated by using one or more `InletConnectionPoint`s (see {s223:InletConnectionPoint}) to represent the 
+A `Connection` is the modeling construct used to represent the thing (e.g., pipe, duct, conductor, or free space) that is used to convey
+some Medium (e.g., water, air, electricity, light, wi-fi) between two connectable things. All connections have two or more connection points bound
+to either `Equipment` (see {s223:Equipment}), `DomainSpace` (see {s223:DomainSpace}), or `Junction` (see {s223:Junction}). See Figure 6-2. If the direction
+of flow is constrained, that constraint is indicated by using one or more `InletConnectionPoint`s (see {s223:InletConnectionPoint}) to represent the
 inflow points and `OutletConnectionPoint`s (see {s223:OutletConnectionPoint}) to represent the outflow points.
-  
-A `Connection` may contain branches or intersections. These may be modeled using `Junction`s if it is necessary to identify a specific intersection. 
+
+A `Connection` may contain branches or intersections. These may be modeled using `Junction`s if it is necessary to identify a specific intersection.
 (see {s223:Junction}).
 
 The constraint to maintain compatible mediums among a `Connection` and all of its associated `ConnectionPoint`s gives rise to multiple
@@ -72,12 +72,12 @@ more details.
 ### Junction (s223:Junction)
 [Open223 term](https://explore.open223.info/s223/Junction)
 
-A `Junction` is a modeling construct used when a branching point within a `Connection` (see {s223:Connection}) is of significance, 
-such as specifying the observation location of a `Sensor`, or when a modeler wants to expose a branch point within a containing piece of `Equipment`. 
-When a `Junction` is used, what might have been modeled as a single, branched `Connection` 
-is separated into three or more separate connections, all tied together with the `Junction` and its associated connection points. 
+A `Junction` is a modeling construct used when a branching point within a `Connection` (see {s223:Connection}) is of significance,
+such as specifying the observation location of a `Sensor`, or when a modeler wants to expose a branch point within a containing piece of `Equipment`.
+When a `Junction` is used, what might have been modeled as a single, branched `Connection`
+is separated into three or more separate connections, all tied together with the `Junction` and its associated connection points.
 
-`Junction` is a subClassOf `Connectable`, which gives it the ability to have connection points, but unlike Equipment (and like Connection) 
+`Junction` is a subClassOf `Connectable`, which gives it the ability to have connection points, but unlike Equipment (and like Connection)
 it is not allowed to change the Medium that passes through it. This is why `Junction` is a sibling class to `Equipment` and not a subclass.
 This constraint to maintain compatible mediums among a `Junction` and all of its associated `ConnectionPoint`s gives rise to multiple
 validation test cases, where the specified medium might be a pure medium, or a mixture with constituents. See {s223:Substance-Medium} for
@@ -92,7 +92,7 @@ A `ConnectionPoint` is constrained to relate to a specific medium such as air, w
 
 A `ConnectionPoint` belongs to exactly one connectable thing (see {s223:Connectable}).
 
-`ConnectionPoint`s are represented graphically in this standard by a triangle with the point indicating a direction of flow, or a diamond in the case of a bidirectional flow as shown in Figure 6-1. 
+`ConnectionPoint`s are represented graphically in this standard by a triangle with the point indicating a direction of flow, or a diamond in the case of a bidirectional flow as shown in Figure 6-1.
 
 ![Graphical Representation of a ConnectionPoint.](figures/Figure_5-2_Graphical_Depiciton_of_Connection_Points.svg)
 
@@ -128,7 +128,7 @@ And their subclass combinations :
 `EnumeratedObservableProperty`,
 `EnumeratedActuatableProperty`.
 
-A `QuantifiableProperty` (or subClass thereof) shall always be associated with a `Unit` and a `QuantityKind`, either explicitly from the `Property`, 
+A `QuantifiableProperty` (or subClass thereof) shall always be associated with a `Unit` and a `QuantityKind`, either explicitly from the `Property`,
 or through the associated Value. If the `Unit` is defined, the SHACL reasoner (if invoked) will figure out and assert a `QuantityKind` if it is
 unambiguous.
 
@@ -141,13 +141,13 @@ A `Property` instance that is not an instance of one of the subclasses is uncons
 ### Observable Property (s223:ObservableProperty)
 [Open223 term](https://explore.open223.info/s223/ObservableProperty)
 
-The term "observable" implies that reading the `ObservableProperty` value will return the result of a physical observation, usually by a `Sensor`.  
+The term "observable" implies that reading the `ObservableProperty` value will return the result of a physical observation, usually by a `Sensor`.
 In contrast, the term "actuatable" (see {s223:ActuatableProperty}) implies that writing to the `ActuatableProperty` value will directly trigger a physical actuation.
 
 ### Actuatable Property (s223:ActuatableProperty)
 [Open223 term](https://explore.open223.info/s223/ActuatableProperty)
 
-The term "actuatable" implies that writing to the `ActuatableProperty` value will directly trigger a physical actuation by either an `Actuator` or `Equipment`. 
+The term "actuatable" implies that writing to the `ActuatableProperty` value will directly trigger a physical actuation by either an `Actuator` or `Equipment`.
 In contrast, the term "observable" (see {s223:ObservableProperty}) implies that reading the `ObservableProperty` value will return the result of a physical observation.
 
 ### Quantifiable Property (s223:QuantifiableProperty)
@@ -183,7 +183,7 @@ An `ExternalReference` that contains BACnet protocol parameter values necessary 
 ### Function (s223:Function)
 [Open223 term](https://explore.open223.info/s223/Function)
 
-A `Function` is used to model transfer and/or transformation of information (i.e. `Property`). It has relations to input Properties and output Properties. The actual algorithms that perform the transformations are described in CDL and are out of scope of the 223 standard.
+A `Function` is used to model transfer and/or transformation of information (i.e., `Property`). It has relations to input Properties and output Properties. The actual algorithms that perform the transformations are described in CDL and are out of scope of the 223 standard.
 
 ### Sensor (s223:Sensor)
 [Open223 term](https://explore.open223.info/s223/Sensor)
@@ -197,26 +197,26 @@ If a `Sensor` observes a `QuantifiableObservableProperty` relative to an assumed
 or common reference point, it can be modeled with only an observation location.
 For example:
 
-```
-    @prefix : <http://example.com/> .
+```turtle
+@prefix : <http://example.com/> .
 
-    :example1 a s223:TemperatureSensor ;
-        s223:hasObservationLocation :location1 ;
-        qudt:hasQuantityKind quantitykind:Temperature ;
-    .
+:example1 a s223:TemperatureSensor ;
+    s223:hasObservationLocation :location1 ;
+    qudt:hasQuantityKind qudtqk:Temperature .
 ```
+
 If a `Sensor` observes a `QuantifiableObservableProperty` relative to a unique
 or specified reference point, it can be modeled with an observation location and
 a reference location, and indicating the difference between two values by setting `isDeltaQuantity` to `true`. For example:
-```
-    @prefix : <http://example.com/> .
 
-    :example2 a s223:TemperatureSensor ;
-        s223:hasObservationLocation :location1 ;
-        s223:hasReferenceLocation :location2 ;
-        qudt:hasQuantityKind quantitykind:Temperature ;
-        qudt:isDeltaQuantity true ;
-    .
+```turtle
+@prefix : <http://example.com/> .
+
+:example2 a s223:TemperatureSensor ;
+    s223:hasObservationLocation :location1 ;
+    s223:hasReferenceLocation :location2 ;
+    qudt:hasQuantityKind qudtqk:Temperature ;
+    qudt:isDeltaQuantity true .
 ```
 
 
@@ -285,7 +285,7 @@ A `Relation` that associates adjacent entities in a connection path, comprised o
 ### has Boundary Connection Point (s223:hasBoundaryConnectionPoint)
 [Open223 term](https://explore.open223.info/s223/hasBoundaryConnectionPoint)
 
-The `hasBoundaryConnectionPoint` relation means the `ConnectionPoint` represents the boundary of a `System` (see {s223:System}) defined by the modeler, such as a model fragment provided by the vendor of a collection of equipment intended for integration with another model. The presence of this relation is used to indicate that such a "dangling connection point" should not generate a validation error in a non-integrated context but should generate an error in a integrated context.
+The `hasBoundaryConnectionPoint` relation means the `ConnectionPoint` represents the boundary of a `System` (see {s223:System}) defined by the modeler, such as a model fragment provided by the vendor of a collection of equipment intended for integration with another model. The presence of this relation is used to indicate that such a "dangling connection point" should not generate a validation error in a non-integrated context but should generate an error in an integrated context.
 
 ### has Optional Connection Point (s223:hasOptionalConnectionPoint)
 [Open223 term](https://explore.open223.info/s223/hasOptionalConnectionPoint)
@@ -295,7 +295,7 @@ The `hasOptionalConnectionPoint` relation means the `ConnectionPoint` represents
 ### mapsTo (s223:mapsTo)
 [Open223 term](https://explore.open223.info/s223/mapsTo)
 
-A `Relation` that associates a `ConnectionPoint` of a `Connectable` with a corresponding `ConnectionPoint` of the one containing it (see {pub:equipment-containment}). The associated `ConnectionPoint`s shall have the same direction (see {s223:EnumerationKind-Direction}) and compatible medium (see {s223:Substance-Medium}).
+A `Relation` that associates a `ConnectionPoint` of a `Connectable` with a corresponding `ConnectionPoint` of the one containing it (see {pub:equipment-containment}). The associated `ConnectionPoint`s shall have a compatible medium (see {s223:Substance-Medium}).
 
 ### has Medium (s223:hasMedium)
 [Open223 term](https://explore.open223.info/s223/hasMedium)
@@ -341,7 +341,9 @@ A `Relation` that associates a `Property` with an external telemetry source.
 ### observes (s223:observes)
 [Open223 term](https://explore.open223.info/s223/observes)
 
-A `Relation` that associates a `Sensor` with one `ObservableProperty` (see {s223:ObservableProperty}) which is used by the sensor to generate a measurement value (e.g. a temperature) or a simple observation of a stimulus causing a reaction (e.g. a current binary switch that closes a dry contact when a fan is powered on).
+A `Relation` that associates a `Sensor` with one `ObservableProperty` (see {s223:ObservableProperty})
+which is used by the sensor to generate a measurement value (e.g., a temperature) or a simple observation of a stimulus
+causing a reaction (e.g., a current binary switch that closes a dry contact when a fan is powered on).
 
 ### has Property (s223:hasProperty)
 [Open223 term](https://explore.open223.info/s223/hasProperty)

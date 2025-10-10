@@ -8,6 +8,12 @@ Build ASHRAE 223P-compliant models using YAML and Python. This documentation foc
 
 getting-started.md
 environment.md
+namespace.md
+subclass.md
+schema-graph.md
+basic_properties.md
+basic_connections.md
+more-connections.md
 core.md
 enum.md
 basics.md

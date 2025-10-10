@@ -2997,6 +2997,12 @@ This page is generated from the codebase. It lists operator overloads (dunder me
 - __lshift__(self, other: 'Any') -> 'Any'  —  Build a connection to this thing from another thing.
 - __matmul__(self, other: 'Any') -> 'Any'  —  Add an external reference to the node property @ ref
 - __rshift__(self, other: 'Any') -> 'Any'  —  Build a connection from this thing to another thing.
+## bob.properties.electricity.ElectricResistance
+- __gt__(self, value, /)  —  Return self>value.
+- __iadd__(self, other: 'Any') -> 'Any'  —  Add something (aspect, role...) to the node prop += aspect
+- __lshift__(self, other: 'Any') -> 'Any'  —  Build a connection to this thing from another thing.
+- __matmul__(self, other: 'Any') -> 'Any'  —  Add an external reference to the node property @ ref
+- __rshift__(self, other: 'Any') -> 'Any'  —  Build a connection from this thing to another thing.
 ## bob.properties.electricity.Frequency
 - __gt__(self, value, /)  —  Return self>value.
 - __iadd__(self, other: 'Any') -> 'Any'  —  Add something (aspect, role...) to the node prop += aspect

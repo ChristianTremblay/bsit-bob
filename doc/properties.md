@@ -51,6 +51,11 @@ Legend: Signature shows __init__ (minus self). s223 term is derived from _class_
 - Summary: Such as a temperature reading.
 - s223 term: `QuantifiableObservableProperty` (<https://explore.open223.info/s223/QuantifiableObservableProperty>)
 
+### ElectricResistance
+- Signature: `ElectricResistance(*args: 'Any', **kwargs: 'Any')`
+- Summary: Such as a temperature reading.
+- s223 term: `QuantifiableObservableProperty` (<https://explore.open223.info/s223/QuantifiableObservableProperty>)
+
 ### Frequency
 - Signature: `Frequency(*args: 'Any', **kwargs: 'Any')`
 - Summary: Such as a temperature reading.

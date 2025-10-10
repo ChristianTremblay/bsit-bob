@@ -1,17 +1,48 @@
 # Getting Started
 
-Install
+# Installation
+
+The recommended way to install `Bob` is with [uv](https://docs.astral.sh/uv/):
+
 ```bash
-git clone https://bas-im.emcs.cornell.edu/223/si-builder.git
-cd si-builder
-pip install .
+% mkdir my-building
+% cd my-building
+% uv init --python 3.13
+Initialized project `my-building`
+% uv add bsit-bob
+Using CPython 3.13.1
+Creating virtual environment at: .venv
+...
 ```
 
-Verify import
-```python
-# ipython
-import bob  # si-builder package
+To test that it works, try creating a generic piece of equipment:
+
 ```
+$ uv run python3
+...
+>>> from bob import Equipment, dump
+>>> thing = Equipment(label="thing")
+>>> dump()
+```
+
+And dump out the results:
+
+```turtle
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+
+[] a s223:Connectable,
+        s223:Equipment ;
+    rdfs:label "thing" .
+```
+```{admonition} URIs may be different
+:class: warning
+
+The URIs for ASHRAE Standards 135, 223, 231 have not been
+finialized and are subject to change.
+```
+
+
 
 Environment configuration
 - We suggest you install python-dotenv. si-builder automatically loads a .env file in your project root if present.
@@ -24,7 +55,7 @@ pytest .\tests\
 ```
 
 Next steps
-- Read Environment to configure .env.
+- Read Environment to configure .env (optional).
 - Read Basics to model a tiny System.
 - See Syntax Operators to use >, >>, @, | shorthands.
 - Use Worked Examples to mirror patterns from tests.

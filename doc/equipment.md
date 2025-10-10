@@ -19,7 +19,7 @@ Legend: Signature shows __init__ (minus self). s223 term is derived from _class_
 
 ## bob.equipment.control.controller
 ### Controller
-- Signature: `Controller(config: Dict = None, **kwargs)`
+- Signature: `Controller(config: Optional[Dict] = None, **kwargs)`
 - Summary: A controller executes function blocks and connect to other Equipment
 - s223 term: `Controller` (<https://explore.open223.info/s223/Controller>)
 
@@ -36,7 +36,7 @@ Legend: Signature shows __init__ (minus self). s223 term is derived from _class_
 
 ## bob.equipment.electricity.vfd
 ### VFD
-- Signature: `VFD(config: Dict = None, **kwargs)`
+- Signature: `VFD(config: Optional[Dict] = None, **kwargs)`
 - Summary: This is required here so actuatesProperty gets its namespace from S223
 - s223 term: `VariableFrequencyDrive` (<https://explore.open223.info/s223/VariableFrequencyDrive>)
 
