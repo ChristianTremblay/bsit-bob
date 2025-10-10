@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Dict
 
 from rdflib import URIRef
 
@@ -60,7 +60,7 @@ def define_sensors(config):
         try:
             if issubclass(_cls, Sensor):
                 _cls = _cls
-        except:
+        except Exception:
             raise TypeError("Please provide class for sensor")
 
         sensors.append(_cls(label=_label, **sensor_data))
@@ -81,9 +81,9 @@ class Sensor(_Sensor):
     hasObservationLocation: LocationReference
     observes: PropertyReference
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, config: Dict[str, Any] = {}, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
-        super().__init__(**_sensor_kwargs)
+        super().__init__(config=config, **_sensor_kwargs)
 
     @property
     def observedProperty(self):
