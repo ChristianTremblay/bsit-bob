@@ -159,7 +159,7 @@ _log.debug(f"exclude_predicates {exclude_predicates}")
 
 
 class DataGraph(Graph):
-    def add(self, triple: Tuple[Any, Any, Any]) -> None:
+    def add(self, triple: Tuple[Any, Any, Any]) -> Any:
         """
         Add a triple to the data graph, checking the predicate to see if it should
         be included or excluded.
@@ -176,14 +176,14 @@ class DataGraph(Graph):
             if test_name in include_predicates:
                 break
             if test_name in exclude_predicates:
-                return
+                return self
 
         # passes the tests
         super().add(triple)
 
 
 class SchemaGraph(Graph):
-    def add(self, triple: Tuple[Any, Any, Any]) -> None:
+    def add(self, triple: Tuple[Any, Any, Any]) -> Any:
         """
         Add a triple to the schema graph for statements about things in the
         model being build (like subtypes of an equipment) but not about things
@@ -194,7 +194,7 @@ class SchemaGraph(Graph):
 
         # exclude the schema content in the S223 namespace by default
         if subj.startswith(S223):  # and (not isinstance(obj, BNode)):
-            return
+            return self
 
         # passes the tests
         super().add(triple)
@@ -1129,7 +1129,7 @@ class Property(Node):
 
 
 @multimethod
-def add_mm(prop: Property, aspect: EnumerationKind) -> None:
+def add_mm(prop: Property, aspect: EnumerationKind) -> None:  # noqa F811
     """
     Add a role to an equipment
     """
@@ -1141,14 +1141,14 @@ def add_mm(prop: Property, aspect: EnumerationKind) -> None:
 
 
 @multimethod
-def reference_mm(prop: Property, external_reference: ExternalReference) -> None:
+def reference_mm(prop: Property, external_reference: ExternalReference) -> None:  # noqa F811
     """Add an additional external reference to a property."""
     _log.info(f"add external reference {external_reference} to {prop}")
     prop.add_external_reference(external_reference)
 
 
 @multimethod
-def reference_mm(property: Property, internal_reference: Property) -> None:
+def reference_mm(property: Property, internal_reference: Property) -> None:  # noqa F811
     """Property @ Property"""
     _log.info(f"Property {property} hasInternalReference {internal_reference}")
     property.add_internal_reference(internal_reference)
@@ -1717,7 +1717,7 @@ def contains_mm(system: System, equipment: Equipment) -> None:
 
 
 @multimethod
-def contains_mm(system: System, junction: Junction) -> None:
+def contains_mm(system: System, junction: Junction) -> None:  # noqa F811
     """System > Junction"""
     _log.info(f"system {system} hasMember Junction {junction}")
 
@@ -1725,7 +1725,7 @@ def contains_mm(system: System, junction: Junction) -> None:
 
 
 @multimethod
-def contains_mm(system: System, subsystem: System) -> None:
+def contains_mm(system: System, subsystem: System) -> None:  # noqa F811
     """System > System"""
     _log.info(f"system {system} hasMember subsystem {subsystem}")
 
@@ -1733,7 +1733,7 @@ def contains_mm(system: System, subsystem: System) -> None:
 
 
 @multimethod
-def contains_mm(system: System, thing_list: List[Node]) -> None:
+def contains_mm(system: System, thing_list: List[Node]) -> None:  # noqa F811
     """System > List[Union[Equipment,System, Junction]]"""
     _log.info(f"system {system} hasMember list of things {thing_list}")
 
@@ -1746,7 +1746,7 @@ def contains_mm(system: System, thing_list: List[Node]) -> None:
 
 
 @multimethod
-def add_mm(system: System, info: EnumerationKind) -> None:
+def add_mm(system: System, info: EnumerationKind) -> None:  # noqa F811
     if info in Role._children:
         """
         Add a role to a system
@@ -1791,7 +1791,7 @@ class Connection(Node, metaclass=ConnectionMetaclass):
 
 
 @multimethod
-def add_mm(from_connection: Connection, aspect: EnumerationKind) -> None:
+def add_mm(from_connection: Connection, aspect: EnumerationKind) -> None:  # noqa F811
     """
     Add a role to a connection point
     """
@@ -1831,7 +1831,7 @@ class Connectable(Node):
 
 
 @multimethod
-def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
+def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:  # noqa F811
     """Connectable >> Connectable"""
     _log.info(f"connect from {from_thing} to {to_thing}")
 
@@ -1899,7 +1899,7 @@ def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
 
 
 @multimethod
-def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
+def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:  # noqa F811
     """Connectable >> [Connectable]"""
     _log.info(f"connect from {from_thing} to {to_things}")
 
@@ -2057,7 +2057,7 @@ class ConnectionPoint(Node):
 
 
 @multimethod
-def add_mm(from_connection_point: ConnectionPoint, role: EnumerationKind) -> None:
+def add_mm(from_connection_point: ConnectionPoint, role: EnumerationKind) -> None:  # noqa F811
     """
     Add a role to a connection point
     """
@@ -2070,10 +2070,10 @@ def add_mm(from_connection_point: ConnectionPoint, role: EnumerationKind) -> Non
         role.isRoleOf = from_connection_point
 
 
-@multimethod
-def connect_mm(
+@multimethod  # noqa F811
+def connect_mm( #noqa F811
     from_connection_point: ConnectionPoint, to_connection_point: ConnectionPoint
-) -> None:
+) -> None:  # noqa F811
     """ConnectionPoint >> ConnectionPoint"""
     _log.info(f"connect from {from_connection_point} to {to_connection_point}")
 
@@ -2147,7 +2147,7 @@ def connect_mm(
 
 
 @multimethod
-def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> None:
+def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> None:  # noqa F811
     """ConnectionPoint >> Connection"""
     _log.info(f"connect from {connection_point} to {connection}")
 
@@ -2218,7 +2218,7 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
 
 
 @multimethod
-def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> None:
+def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> None:  # noqa F811
     """Connection >> ConnectionPoint"""
     _log.info(f"connect from {connection} to {connection_point}")
 
@@ -2289,7 +2289,7 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
 
 
 @multimethod
-def connect_mm(equipment: Equipment, connection_point: ConnectionPoint) -> None:
+def connect_mm(equipment: Equipment, connection_point: ConnectionPoint) -> None:  # noqa F811
     """Equipment >> ConnectionPoint"""
     _log.info(f"connect from {equipment} to {connection_point}")
 
@@ -2360,7 +2360,7 @@ def connect_mm(equipment: Equipment, connection_point: ConnectionPoint) -> None:
 
 
 @multimethod
-def connect_mm(equipment: Equipment, connection: Connection) -> None:
+def connect_mm(equipment: Equipment, connection: Connection) -> None:  # noqa F811
     """Equipment >> Connection"""
     _log.info(f"connect from {equipment} to {connection}")
 
@@ -2398,7 +2398,7 @@ def connect_mm(equipment: Equipment, connection: Connection) -> None:
 
 
 @multimethod
-def connect_mm(connection: Connection, equipment: Equipment) -> None:
+def connect_mm(connection: Connection, equipment: Equipment) -> None:  # noqa F811
     """Connection >> Equipment"""
     _log.info(f"connect from {connection} to {equipment}")
 
@@ -2440,7 +2440,7 @@ def connect_mm(connection: Connection, equipment: Equipment) -> None:
 
 
 @multimethod
-def connect_mm(connection: Connection, equipment_list: List[Equipment]) -> None:
+def connect_mm(connection: Connection, equipment_list: List[Equipment]) -> None:  # noqa F811
     """Connection >> [Equipment]"""
     _log.info(f"connect from {connection} to {equipment_list}")
 
@@ -2483,7 +2483,7 @@ def connect_mm(connection: Connection, equipment_list: List[Equipment]) -> None:
 
 
 @multimethod
-def connect_mm(connection_point: ConnectionPoint, equipment: Equipment) -> None:
+def connect_mm(connection_point: ConnectionPoint, equipment: Equipment) -> None:  # noqa F811
     """ConnectionPoint >> Equipment"""
     _log.info(f"connect from {connection_point} to {equipment}")
     if not (connection_point_medium := getattr(connection_point, "hasMedium", None)):
@@ -2519,7 +2519,7 @@ def connect_mm(connection_point: ConnectionPoint, equipment: Equipment) -> None:
 
 
 @multimethod
-def connect_mm(connection: Connection, system: System) -> None:
+def connect_mm(connection: Connection, system: System) -> None:  # noqa F811
     """Connection >> System"""
     _log.info(f"connect from {connection} to {system}")
 
@@ -2557,7 +2557,7 @@ def connect_mm(connection: Connection, system: System) -> None:
 
 
 @multimethod
-def connect_mm(system: System, connection: Connection) -> None:
+def connect_mm(system: System, connection: Connection) -> None:  # noqa F811
     """System >> Connection"""
     _log.info(f"connect from {system} to {connection}")
 
@@ -2595,7 +2595,7 @@ def connect_mm(system: System, connection: Connection) -> None:
 
 
 @multimethod
-def connect_mm(equipment: Equipment, system: System) -> None:
+def connect_mm(equipment: Equipment, system: System) -> None:  # noqa F811
     """Equipment >> System"""
     _log.info(f"connect from {equipment} to {system}")
 
@@ -2661,8 +2661,8 @@ def connect_mm(equipment: Equipment, system: System) -> None:
     connect_mm(from_connection_point, to_connection_point)
 
 
-@multimethod
-def connect_mm(system: System, equipment: Equipment) -> None:
+@multimethod #noqa F811
+def connect_mm(system: System, equipment: Equipment) -> None:  # noqa F811
     """System >> Equipment"""
     _log.info(f"connect from {system} to {equipment}")
 
@@ -2670,7 +2670,7 @@ def connect_mm(system: System, equipment: Equipment) -> None:
     # already connected, organized by medium
     from_out = defaultdict(set)
     for connection_point in system._boundary_connection_points:
-        _log.debug(f"    - attr, connection_point: {attr} {connection_point}")
+        _log.debug(f"    - attr, connection_point: {attr} {connection_point}") #noqa F821
         if connection_point.connectsThrough:
             _log.debug("        - already connected")
             continue
@@ -2749,7 +2749,7 @@ class OptionalConnectionPoint(BoundaryConnectionPoint):
 
 
 @multimethod
-def connect_mm(from_system: System, to_system: System) -> None:
+def connect_mm(from_system: System, to_system: System) -> None:  # noqa F811
     """System >> System"""
     _log.info(f"connect from {from_system} to {to_system}")
 
@@ -2855,7 +2855,7 @@ class Zone(Container, Node):
 
 
 @multimethod
-def connect_mm(from_system: System, to_zone: Zone) -> None:
+def connect_mm(from_system: System, to_zone: Zone) -> None:  # noqa F811
     """System >> Zone"""
     _log.info(f"connect from {from_system} to {to_zone}")
 
@@ -2892,7 +2892,7 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # already connected, organized by medium
     to_in = defaultdict(set)
     for attr, boundary_connection_point in to_zone._zone_connection_points.items():
-        if isinstance(boundary_connection_point, OutletSystemConnectionPoint):
+        if isinstance(boundary_connection_point, OutletSystemConnectionPoint): #noqa F821
             continue
         connection_point = boundary_connection_point.mapsTo
         if not connection_point:
@@ -2942,7 +2942,7 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
 
 
 @multimethod
-def connect_mm(zone: Zone, connection: Connection) -> None:
+def connect_mm(zone: Zone, connection: Connection) -> None:  # noqa F811
     """Zone >> Connection"""
     _log.info(f"connect from {zone} to {connection}")
 
@@ -2955,7 +2955,7 @@ def connect_mm(zone: Zone, connection: Connection) -> None:
     # already connected, organized by medium
     from_out = set()
     for attr, zone_connection_point in zone._zone_connection_points.items():
-        if isinstance(zone_connection_point, InletSystemConnectionPoint):
+        if isinstance(zone_connection_point, InletSystemConnectionPoint): #noqa F821
             continue
         connection_point = zone_connection_point.mapsTo
         if not connection_point:
@@ -3030,26 +3030,26 @@ class ZoneConnectionPoint(Node):
 
 
 @multimethod
-def connect_mm(
+def connect_mm( #noqa F811
     zone_connection_point: ZoneConnectionPoint, connection: Connection
-) -> None:
+) -> None:  # noqa F811
     """ZoneConnectionPoint >> Connection"""
     raise NotImplementedError("ZoneConnectionPoint >> Connection")
 
 
 @multimethod
-def connect_mm(
+def connect_mm( #noqa F811
     connection: Connection, zone_connection_point: ZoneConnectionPoint
-) -> None:
+) -> None:  # noqa F811
     """Connection >> ZoneConnectionPoint"""
     raise NotImplementedError("Connection >> ZoneConnectionPoint")
 
 
 @multimethod
-def connect_mm(
+def connect_mm( #noqa F811
     from_zone_connection_point: ZoneConnectionPoint,
     to_zone_connection_point: ZoneConnectionPoint,
-) -> None:
+) -> None:  # noqa F811
     """ZoneConnectionPoint >> ZoneConnectionPoint"""
     _log.info(
         f"connect from {from_zone_connection_point} to {to_zone_connection_point}"
@@ -3090,7 +3090,7 @@ class ZoneGroup(Container, Node):
 
 
 @multimethod
-def contains_mm(zone_group: ZoneGroup, zone: Zone) -> None:
+def contains_mm(zone_group: ZoneGroup, zone: Zone) -> None:  # noqa F811
     """ZoneGroup > Zone"""
     _log.info(f"zone group {zone_group} contains zone {zone}")
 
@@ -3106,7 +3106,7 @@ class PhysicalSpace(Container, Node):
 
 
 @multimethod
-def contains_mm(parent_space: PhysicalSpace, child_space: PhysicalSpace) -> None:
+def contains_mm(parent_space: PhysicalSpace, child_space: PhysicalSpace) -> None:  # noqa F811
     """PhysicalSpace > PhysicalSpace"""
     _log.info(f"physical space {parent_space} contains physical space {child_space}")
 
@@ -3116,7 +3116,7 @@ def contains_mm(parent_space: PhysicalSpace, child_space: PhysicalSpace) -> None
 
 
 @multimethod
-def contains_mm(physical_space: PhysicalSpace, domain_space: DomainSpace) -> None:
+def contains_mm(physical_space: PhysicalSpace, domain_space: DomainSpace) -> None:  # noqa F811
     """PhysicalSpace > DomainSpace"""
     _log.info(f"physical space {physical_space} encloses {domain_space}")
 
@@ -3126,7 +3126,7 @@ def contains_mm(physical_space: PhysicalSpace, domain_space: DomainSpace) -> Non
 
 
 @multimethod
-def contains_mm(physical_space: PhysicalSpace, thing_list: List[Node]) -> None:
+def contains_mm(physical_space: PhysicalSpace, thing_list: List[Node]) -> None:  # noqa F811
     """PhysicalSpace >> List[Union[PhysicalSpace,DomainSpace]]"""
     _log.info(f"physical space {physical_space} contains/encloses list {thing_list}")
 
@@ -3208,7 +3208,7 @@ class Junction(Connectable):
 
 
 @multimethod
-def connect_mm(connectable: Connectable, junction: Junction) -> None:
+def connect_mm(connectable: Connectable, junction: Junction) -> None: #noqa F811
     """Connectable >> Junction"""
     _log.info(f"connect from {connectable} to {junction}")
 
@@ -3296,7 +3296,7 @@ def connect_mm(connectable: Connectable, junction: Junction) -> None:
 
 
 @multimethod
-def connect_mm(junction: Junction, connectable: Connectable) -> None:
+def connect_mm(junction: Junction, connectable: Connectable) -> None: #noqa F811
     """Junction >> Connectable"""
     _log.info(f"connect from {junction} to {connectable}")
 
@@ -3388,7 +3388,7 @@ def connect_mm(junction: Junction, connectable: Connectable) -> None:
 
 
 @multimethod
-def connect_mm(junction: Junction, to_things: List[Connectable]) -> None:
+def connect_mm(junction: Junction, to_things: List[Connectable]) -> None: #noqa F811
     """Junction >> [Connectable]"""
     _log.info(f"connect from {junction} to {to_things}")
 
@@ -3484,7 +3484,7 @@ def connect_mm(junction: Junction, to_things: List[Connectable]) -> None:
 
 
 @multimethod
-def connect_mm(from_connection_point: ConnectionPoint, junction: Junction) -> None:
+def connect_mm(from_connection_point: ConnectionPoint, junction: Junction) -> None: #noqa F811
     """ConnectionPoint >> Junction"""
     _log.info(f"connect from {from_connection_point} to {junction}")
 
@@ -3547,7 +3547,7 @@ def connect_mm(from_connection_point: ConnectionPoint, junction: Junction) -> No
 
 
 @multimethod
-def connect_mm(junction: Junction, to_connection_point: ConnectionPoint) -> None:
+def connect_mm(junction: Junction, to_connection_point: ConnectionPoint) -> None: #noqa F811
     """Junction >> ConnectionPoint"""
     _log.info(f"connect from {junction} to {to_connection_point}")
 
@@ -3744,7 +3744,7 @@ class _Function(Node):
 
 
 @multimethod
-def add_mm(equipment: Equipment, info: EnumerationKind) -> None:
+def add_mm(equipment: Equipment, info: EnumerationKind) -> None: #noqa F811
     """
     Add a role to an equipment
     """
@@ -3758,7 +3758,7 @@ def add_mm(equipment: Equipment, info: EnumerationKind) -> None:
 
 
 @multimethod
-def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None:
+def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None: #noqa F811
     """Equipment > Equipment"""
     _log.info(f"equipment {parent_equipment} contains equipment {child_equipment}")
 
@@ -3768,7 +3768,7 @@ def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None
 
 
 @multimethod
-def contains_mm(parent_equipment: Equipment, equipment_list: List[Equipment]) -> None:
+def contains_mm(parent_equipment: Equipment, equipment_list: List[Equipment]) -> None: #noqa F811
     """Equipment > List[Equipment]"""
     _log.info(f"equipment {parent_equipment} contains other equipment {equipment_list}")
 
@@ -3779,7 +3779,7 @@ def contains_mm(parent_equipment: Equipment, equipment_list: List[Equipment]) ->
 
 
 @multimethod
-def contains_mm(parent_equipment: Equipment, child_junction: Junction) -> None:
+def contains_mm(parent_equipment: Equipment, child_junction: Junction) -> None: #noqa F811
     """Equipment > Junction"""
     _log.info(f"equipment {parent_equipment} contains junction {child_junction}")
 
@@ -3789,7 +3789,7 @@ def contains_mm(parent_equipment: Equipment, child_junction: Junction) -> None:
 
 
 @multimethod
-def contains_mm(parent_equipment: Equipment, child_function: _Function) -> None:
+def contains_mm(parent_equipment: Equipment, child_function: _Function) -> None: #noqa F811
     """Equipment > Equipment"""
     _log.info(f"equipment {parent_equipment} bob:contains function {child_function}")
 
@@ -3810,7 +3810,7 @@ class _Sensor(Equipment):
 
 
 @multimethod
-def contains_mm(equipment: Equipment, sensor: _Sensor) -> None:
+def contains_mm(equipment: Equipment, sensor: _Sensor) -> None: #noqa F811
     """Equipment > Sensor"""
     _log.info(f"equipment {equipment} contains sensor {sensor}")
 
@@ -3833,7 +3833,7 @@ class DomainSpace(Connectable):
 
 
 @multimethod
-def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
+def contains_mm(zone: Zone, domain_space: DomainSpace) -> None: #noqa F811
     """Zone > DomainSpace"""
     _log.info(f"zone {zone} contains domain space {domain_space}")
 
@@ -3841,7 +3841,7 @@ def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
 
 
 @multimethod
-def contains_mm(zone: Zone, domain_spaces: List[DomainSpace]) -> None:
+def contains_mm(zone: Zone, domain_spaces: List[DomainSpace]) -> None: #noqa F811
     """Zone > List[DomainSpace]"""
     _log.info(f"zone {zone} contains domain spaces {domain_spaces}")
 
@@ -3850,7 +3850,7 @@ def contains_mm(zone: Zone, domain_spaces: List[DomainSpace]) -> None:
 
 
 @multimethod
-def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> None:
+def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> None: #noqa F811
     """DomainSpace >> ConnectionPoint"""
     _log.info(f"connect from {domain_space} to {connection_point}")
     raise NotImplementedError("DomainSpace >> ConnectionPoint")
