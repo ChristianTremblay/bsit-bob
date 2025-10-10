@@ -354,7 +354,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = ""):
                     )
                 try:
                     module = importlib.import_module(package)
-                    cls = getattr(module, class_name)
+                    getattr(module, class_name)
                 except ImportError as e:
                     raise ImportError(
                         f"Could not import package '{package}' for params_{class_name}: {e}, parameters not supported."
