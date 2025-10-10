@@ -5,15 +5,8 @@ import typing as t
 import warnings
 from pathlib import Path
 
-import yaml
 
-from .core import (
-    Connection,
-    ConnectionPoint,
-    Equipment,
-    System,
-    BOB
-)
+from .core import Connection, ConnectionPoint, Equipment, System, BOB
 from .introspection import get_class_from_name
 
 # Optional rich import
@@ -31,6 +24,14 @@ except ImportError:
     Panel = None
 
 
+try:
+    import yaml
+    _YAML_AVAILABLE = True
+
+except ImportError:
+    _YAML_AVAILABLE = False
+
+
 def print_console(msg, style=None, panel=False):
     if _RICH_AVAILABLE:
         if panel and Panel is not None:
@@ -41,7 +42,11 @@ def print_console(msg, style=None, panel=False):
         print(msg)
 
 
-def template_update(base: t.Dict = {}, config: t.Optional[t.Dict] = None, bases: t.Optional[t.List] = None):
+def template_update(
+    base: t.Dict = {},
+    config: t.Optional[t.Dict] = None,
+    bases: t.Optional[t.List] = None,
+):
     """
     This utility allows to preserve module templates from
     undesired modification during creation of Equipment.
@@ -293,6 +298,10 @@ class EquipmentFromTemplate(Equipment):
 
 
 def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = ""):
+    if _YAML_AVAILABLE is False:
+        raise RuntimeError(
+            "PyYAML is not installed. Install with `pip install .[yaml]` or `pip install bob[yaml]`."
+        )
     if yaml_file == "":
         raise FileNotFoundError("No YAML file provided")
     else:
@@ -337,7 +346,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = ""):
     junctions = yaml_content.get("junctions", {})
     connection_points = yaml_content.get("cp", {})
     bacnet = yaml_content.get("bacnet", {})
-    influxdb = yaml_content.get("influxdb", {}) #noqa F841 Future use
+    influxdb = yaml_content.get("influxdb", {})  # noqa F841 Future use
 
     # boundaries = yaml_content.get("boundaries", None)
 

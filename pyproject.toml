@@ -11,17 +11,11 @@ readme = "README.md"
 license = {text = "MIT"}
 dependencies = [
     "rdflib",
-    "python-dotenv",
-    "click>=8.1.8",
-    "flake8>=7.1.2",
-    "isort>=6.0.1",
-    "ontoenv>=0.3.9",
-    "pyshacl>=0.30.0",
-    "pytest-cov>=6.0.0",
-    "pytest>=4.6.11",
-    "pyvis>=0.3.2",
-    "pyyaml>=5.4.1",
 ]
+
+[project.optional-dependencies]
+templates = ["python-dotenv", "pyyaml>=5.4.1"]
+validation = ["pyvis>=0.3.2","click>=8.1.8","python-dotenv"]
 
 [tool.setuptools.packages.find]
 include = ["bob*"]
@@ -36,4 +30,6 @@ dev-dependencies = [
     "flake8>=7.1.2",
     "mypy>=1.17.1",
     "ruff>=0.12.12",
+    "pytest-cov>=6.0.0",
+    "pytest>=4.6.11",
 ]
