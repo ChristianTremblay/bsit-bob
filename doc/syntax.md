@@ -1,5 +1,9 @@
 # YAML Syntax Reference
 
+This section covers the syntax used in templates. si-builder cover the bases of templates
+and more options will be available by using si-modeler and si-templates packages. Those
+two are not covered here.
+
 Top-level keys
 - name: Template identifier
 - template_class: System | Equipment | Controller | Space | Junction …
