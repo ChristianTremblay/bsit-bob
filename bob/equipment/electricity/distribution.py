@@ -1,18 +1,12 @@
 from typing import Dict
+from rdflib import Literal
 
-
-from bob.enum import ElectricalPhaseIdentifier, Aspect
 from bob.properties import ElectricPowerkW
-from bob.properties.electricity import Amps
 
-from ...connections import electricity as elec_cnx
 from ...core import (
     BOB,
-    P223,
     S223,
     Equipment,
-    System,
-    QuantifiableObservableProperty,
 )
 
 _namespace = BOB
@@ -21,6 +15,7 @@ _namespace = BOB
 class Transformer(Equipment):
     _class_iri = S223.ElectricEnergyTransformer
     hasPower: ElectricPowerkW
+    label: Literal  # Explicit type annotation for mypy
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}

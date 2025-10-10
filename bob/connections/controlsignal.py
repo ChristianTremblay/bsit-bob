@@ -1,6 +1,5 @@
-from typing import Union
 
-from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum, UniversalSignalTypeEnum
+from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum
 
 from ..core import (
     BOB,
@@ -9,7 +8,7 @@ from ..core import (
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
-    OutletConnectionPoint,
+    OutletConnectionPoint
 )
 from ..enum import Electricity, ModulatedSignal
 
@@ -19,7 +18,7 @@ _namespace = BOB
 
 # === GENERAL
 class OnOffSignalConnection(Connection):
-    hasMedium = Electricity.OnOffSignal
+    hasMedium = Electricity.OnOffSignal #noqa f841
     _class_iri = S223.Connection
 
 

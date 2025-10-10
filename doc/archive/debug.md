@@ -129,3 +129,4 @@ the second from the one added to the `bob` logger:
 DEBUG:bob.equipment.hvac.valve:TwoWayActuatedOnOffValve.__init__ {'equipment': {('actuator', <class 'bob.equipment.hvac.actuator.ElectricalOnOffActuator'>): {}, ('valve', <class 'bob.equipment.hvac.valve.TwoWayValve'>): {}}, 'properties': {}} {'label': 'valve'}
 ```
 
+

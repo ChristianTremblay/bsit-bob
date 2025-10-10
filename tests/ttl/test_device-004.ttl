@@ -63,8 +63,8 @@ ex42:00005 a s223:Connectable,
         s223:Equipment,
         scratch:GasMonitor ;
     rdfs:label "CO2-2" ;
-    s223:contains ex42:00008,
-        ex42:00010 ;
+    s223:contains ex42:00009,
+        ex42:00011 ;
     s223:hasConnectionPoint ex42:00006,
         ex42:00007 ;
     s223:hasPhysicalLocation ex42:00035 ;
@@ -86,27 +86,38 @@ ex42:00007 a s223:ConnectionPoint,
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00005 .
 
-ex42:00008 a s223:Connectable,
+ex42:00008 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:GasConcentration ;
+    rdfs:label "observed_property" ;
+    s223:ofMedium s223:Fluid-Air ;
+    s223:ofSubstance s223:Constituent-CO2 ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
+    qudt:hasUnit unit:PPM .
+
+ex42:00009 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "CO2_sensor" ;
     s223:hasMaxRange ex42:00002 ;
     s223:hasMinRange ex42:00001 ;
     s223:hasObservationLocation ex42:00036 ;
-    s223:observes ex42:00009 .
+    s223:hasProperty ex42:00008 ;
+    s223:observes ex42:00008 .
 
-ex42:00009 a s223:ObservableProperty,
+ex42:00010 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
-        bob:GasConcentration ;
-    rdfs:label "CO2_sensor.GasConcentration" ;
+        bob:Temperature ;
+    rdfs:label "observed_property" ;
     s223:ofMedium s223:Fluid-Air ;
-    s223:ofSubstance s223:Constituent-CO2 ;
-    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
-    qudt:hasUnit unit:PPM .
+    qudt:hasQuantityKind qudtqk:Temperature ;
+    qudt:hasUnit unit:DEG_C .
 
-ex42:00010 a s223:Connectable,
+ex42:00011 a s223:Connectable,
         s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
@@ -116,19 +127,10 @@ ex42:00010 a s223:Connectable,
     s223:hasMinRange ex42:00003 ;
     s223:hasObservationLocation ex42:00036 ;
     s223:hasProperty ex42:00003,
-        ex42:00004 ;
-    s223:observes ex42:00011 ;
+        ex42:00004,
+        ex42:00010 ;
+    s223:observes ex42:00010 ;
     rdfs:comment "Internal temperature sensor of Equipment" .
-
-ex42:00011 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Temperature ;
-    rdfs:label "Temperature_sensor.Temperature" ;
-    s223:ofMedium s223:Fluid-Air ;
-    qudt:hasQuantityKind qudtqk:Temperature ;
-    qudt:hasUnit unit:DEG_C .
 
 ex42:00012 a s223:ObservableProperty,
         s223:Property,
@@ -170,8 +172,8 @@ ex42:00016 a s223:Connectable,
         s223:Equipment,
         scratch:GasMonitor ;
     rdfs:label "GM-1" ;
-    s223:contains ex42:00019,
-        ex42:00021 ;
+    s223:contains ex42:00020,
+        ex42:00022 ;
     s223:hasConnectionPoint ex42:00017,
         ex42:00018 ;
     rdfs:comment "Dual Gas Monitoring Equipment that measure NO2 and CO. Usually used in underground parking lot" ;
@@ -192,43 +194,45 @@ ex42:00018 a s223:ConnectionPoint,
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00016 .
 
-ex42:00019 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor ;
-    rdfs:label "CO_sensor" ;
-    s223:hasMaxRange ex42:00013 ;
-    s223:hasMinRange ex42:00012 ;
-    s223:observes ex42:00020 .
-
-ex42:00020 a s223:ObservableProperty,
+ex42:00019 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:GasConcentration ;
-    rdfs:label "CO_sensor.GasConcentration" ;
+    rdfs:label "observed_property" ;
     s223:ofMedium s223:Fluid-Air ;
     s223:ofSubstance s223:Constituent-CO ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PPM .
 
-ex42:00021 a s223:Connectable,
+ex42:00020 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor ;
+    rdfs:label "CO_sensor" ;
+    s223:hasMaxRange ex42:00013 ;
+    s223:hasMinRange ex42:00012 ;
+    s223:hasProperty ex42:00019 ;
+    s223:observes ex42:00019 .
+
+ex42:00021 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:GasConcentration ;
+    rdfs:label "observed_property" ;
+    s223:ofMedium s223:Fluid-Air ;
+    s223:ofSubstance s223:NOX-NO2 ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
+    qudt:hasUnit unit:PPM .
+
+ex42:00022 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "NO2_sensor" ;
     s223:hasMaxRange ex42:00015 ;
     s223:hasMinRange ex42:00014 ;
-    s223:observes ex42:00022 .
-
-ex42:00022 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:GasConcentration ;
-    rdfs:label "NO2_sensor.GasConcentration" ;
-    s223:ofMedium s223:Fluid-Air ;
-    s223:ofSubstance s223:NOX-NO2 ;
-    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
-    qudt:hasUnit unit:PPM .
+    s223:hasProperty ex42:00021 ;
+    s223:observes ex42:00021 .
 
 ex42:00023 a s223:ObservableProperty,
         s223:Property,
@@ -252,7 +256,7 @@ ex42:00025 a s223:Connectable,
         s223:Equipment,
         scratch:GasMonitor ;
     rdfs:label "CO2-1" ;
-    s223:contains ex42:00028 ;
+    s223:contains ex42:00029 ;
     s223:hasConnectionPoint ex42:00026,
         ex42:00027 ;
     rdfs:comment "CO2 Monitor" ;
@@ -273,30 +277,31 @@ ex42:00027 a s223:ConnectionPoint,
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00025 .
 
-ex42:00028 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor ;
-    rdfs:label "CO2_sensor" ;
-    s223:hasMaxRange ex42:00024 ;
-    s223:hasMinRange ex42:00023 ;
-    s223:observes ex42:00029 .
-
-ex42:00029 a s223:ObservableProperty,
+ex42:00028 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:GasConcentration ;
-    rdfs:label "CO2_sensor.GasConcentration" ;
+    rdfs:label "observed_property" ;
     s223:ofMedium s223:Fluid-Air ;
     s223:ofSubstance s223:Constituent-CO2 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PPM .
 
+ex42:00029 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor ;
+    rdfs:label "CO2_sensor" ;
+    s223:hasMaxRange ex42:00024 ;
+    s223:hasMinRange ex42:00023 ;
+    s223:hasProperty ex42:00028 ;
+    s223:observes ex42:00028 .
+
 ex42:00030 a s223:Connectable,
         s223:Equipment,
         scratch:GasMonitor ;
     rdfs:label "CO2-4" ;
-    s223:contains ex42:00033 ;
+    s223:contains ex42:00034 ;
     s223:hasConnectionPoint ex42:00031,
         ex42:00032 ;
     rdfs:comment "CO2 Monitor" ;
@@ -317,24 +322,25 @@ ex42:00032 a s223:ConnectionPoint,
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00030 .
 
-ex42:00033 a s223:Connectable,
+ex42:00033 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:GasConcentration ;
+    rdfs:label "observed_property" ;
+    s223:ofMedium s223:Fluid-Air ;
+    s223:ofSubstance s223:Constituent-CO2 ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
+    qudt:hasUnit unit:PPM .
+
+ex42:00034 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "CO2_sensor" ;
     s223:hasMaxRange ex42:00024 ;
     s223:hasMinRange ex42:00023 ;
-    s223:observes ex42:00034 .
-
-ex42:00034 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:GasConcentration ;
-    rdfs:label "CO2_sensor.GasConcentration" ;
-    s223:ofMedium s223:Fluid-Air ;
-    s223:ofSubstance s223:Constituent-CO2 ;
-    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
-    qudt:hasUnit unit:PPM .
+    s223:hasProperty ex42:00033 ;
+    s223:observes ex42:00033 .
 
 ex42:00035 a s223:PhysicalSpace,
         bob:Floor ;

@@ -1,0 +1,54 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/sample/fan_device_from_yaml
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+
+
+<http://data.ashrae.org/standard223/1.0/data/fan_device_from_yaml>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/fan_device_from_yaml> ;
+  rdfs:label "fan_device_from_yaml" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+_:N533ce3a638d942698fc1d54d2945ff50 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "SF-1.airOutlet" ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf _:N64c71e2701ee42faae68bf2affc8c0c5 ;
+    s223:pairedConnectionPoint _:N7a7c1b9c92f742a6b7a1fd108b77d704 .
+
+_:N64c71e2701ee42faae68bf2affc8c0c5 a s223:Connectable,
+        s223:Equipment,
+        s223:Fan,
+        bob:DynamicEquipment ;
+    rdfs:label "SF-1" ;
+    s223:hasConnectionPoint _:N533ce3a638d942698fc1d54d2945ff50,
+        _:N7a7c1b9c92f742a6b7a1fd108b77d704,
+        _:Nb91fec886bae4dfb9a2332a4ce53b511 ;
+    bob:airInlet _:N7a7c1b9c92f742a6b7a1fd108b77d704 ;
+    bob:airOutlet _:N533ce3a638d942698fc1d54d2945ff50 ;
+    rdfs:comment "A really basic Fan" .
+
+_:N7a7c1b9c92f742a6b7a1fd108b77d704 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "SF-1.airInlet" ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf _:N64c71e2701ee42faae68bf2affc8c0c5 ;
+    s223:pairedConnectionPoint _:N533ce3a638d942698fc1d54d2945ff50 .
+
+_:Nb91fec886bae4dfb9a2332a4ce53b511 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:ElectricalConnectionPoint ;
+    rdfs:label "SF-1.electricalInlet" ;
+    s223:hasMedium s223:Constituent-Electricity ;
+    s223:isConnectionPointOf _:N64c71e2701ee42faae68bf2affc8c0c5 .
+

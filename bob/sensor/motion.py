@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 
 
 from bob.functions import Function
@@ -25,36 +25,39 @@ class OccupantMotionSensor(OccupancySensor):
     # measuresMedium: Medium = Light
     observes: PropertyReference  # Movement
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, config: Dict[str, Any] = {}, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
-        super().__init__(**_sensor_kwargs)
-
-        self.observes = Motion(
-            # isObservedBy=self,
-            label=f"{self.label}.OccupantMotion",
+        observes_prop = Motion(
+            label="observed_property",  # needs more focus
             ofMedium=Light.Infrared,
             **_property_kwargs,
         )
+        _sensor_kwargs["observed_property"] = observes_prop
+
+        super().__init__(config=config, **_sensor_kwargs)
 
 
-class OccupantCounterSensor(OccupantMotionSensor):
+class OccupantCounterSensor(OccupancySensor):
     _class_iri = S223.Sensor
     # measuresMedium: Medium = Light
     occupantCount = Count
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, config: Dict[str, Any] = {}, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
-        super().__init__(**_sensor_kwargs)
-        self.OccupantCount = Count(
-            label=f"{self.label}.OccupantCount",
+        observed_property = Count(
+            label="observed_property",
             **_property_kwargs,
         )
+        _sensor_kwargs["observed_property"] = observed_property
+
+        super().__init__(config=config, **_sensor_kwargs)
+
         counter = Function(label="Counting Function From Sensor")
         counter.hasInput(self.observedProperty)
         counter.hasOutput(self.occupantCount)
-        
+
 
 # TODO : NOPE.... should observe something and produce a presence property
 class OccupantPresenceSensor(OccupancySensor):
@@ -62,28 +65,30 @@ class OccupantPresenceSensor(OccupancySensor):
     # measuresMedium: Medium = Light
     observes: PropertyReference  # Intrusion...good for Windows and doors
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, config: Dict[str, Any] = {}, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
-        super().__init__(**_sensor_kwargs)
-        self.observes = OnOffStatus(
-            # isObservedBy=self,
-            label=f"{self.label}.OccupantPresence",
+        observed_prop = OnOffStatus(
+            label="observed_property",  # needs more focus
             **_measure_kwargs,
         )
+        _sensor_kwargs["observed_property"] = observed_prop
+
+        super().__init__(config=config, **_sensor_kwargs)
 
 
 class PositionSensor(Sensor):
     _class_iri = S223.Sensor
     observes: PropertyReference  # Movement
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, config: Dict[str, Any] = {}, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
-        super().__init__(**_sensor_kwargs)
-
-        self.observes = Percent(
-            # isObservedBy=self,
-            label=f"{self.label}.Position",
+        observed_property = Percent(
+            label="observed_property",  # needs more focus
             **_property_kwargs,
         )
+
+        _sensor_kwargs["observed_property"] = observed_property
+
+        super().__init__(config=config, **_sensor_kwargs)
