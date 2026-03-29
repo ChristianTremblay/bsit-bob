@@ -455,19 +455,22 @@ def config_from_yaml(yaml_file: str | Path | dict = ""):
                 template = get_template(_template)
             except FileNotFoundError:
                 # maybe it's a file
-                if not Path(_template).is_file():
+                _file = Path(".") / _template
+                print(_file)
+                if not _file.is_file():
                     raise FileNotFoundError(
                         f"Template {entity_name} not found in catalog {catalog_module}",
                     )
-                if Path(_template).is_file():
-                    with open(Path(_template)) as _template_file:
+                if _file.is_file():
+                    with open(_file) as _template_file:
                         template = yaml.safe_load(_template_file)
                 else:
                     template = _template
 
             try:
                 if _addon is not None:
-                    with open(Path(_addon)) as _addon_file:
+                    _file = Path(".") / _addon
+                    with open(_file) as _addon_file:
                         _addon_dict = yaml.safe_load(_addon_file)
                     template = template_update(template, _addon_dict)
 
